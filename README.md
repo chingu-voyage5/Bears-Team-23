@@ -5,7 +5,7 @@ Blablaclone | Voyage-5 | chingu.io
 
 _Must have NodeJS, npm and MongoDB installed before proceeding_
 
->1. Clone the repository
+1. Clone the repository
 2. Navigate to **env.example** file and create an env file out of it. Replacing database name as required
 3. Run _npm install_
 4. Run _npm start_
