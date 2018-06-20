@@ -39,12 +39,11 @@ module.exports = (app, express) => {
   app.use(cors(corsConfig), (req, res, next) => {
     next();
   })
-
-  app.use('/api', api);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: false
   }));
+  app.use('/api', api);
   app.use(history({
     verbose: true
   }));

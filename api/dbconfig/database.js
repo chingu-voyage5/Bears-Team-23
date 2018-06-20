@@ -3,6 +3,7 @@ const secrets = require('./secrets');
 const dbConnection = mongoose.connection;
 
 mongoose.connect(secrets.DATABASE);
+mongoose.Promise = require('bluebird');
 
 module.exports = {
     connect() {
