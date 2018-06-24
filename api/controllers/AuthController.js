@@ -27,6 +27,8 @@ class AuthController {
                 new_user
                     .save()
                     .then(user => {
+                        user = user.toObject();
+                        delete user['password'];
                         return responseService(200, 'error', res, `Successfully Signed Up ${user.role}`, user);
                     }).catch(e => {
                         return responseService(500, 'error', res, 'There was an error', null, e);
@@ -52,8 +54,9 @@ class AuthController {
                         token: token
                     });
                     user = user.toObject();
+                    //Delete Password & Token  so its not returned in the object to the user
                     delete user['password']; 
-                    delete user['tokens'];
+                    //Bind token to a custom header
                     res.header('x-auth', token).send(user);
                     return responseService(200, 'success', res, 'User retrieved successfully', user);
                 } else {
@@ -66,6 +69,7 @@ class AuthController {
     };
 
     delete(req, res) {
+        //Use UserID decoded from the JWT token in the header
         Users.findByIdAndRemove(req.user.id)
             .exec()
             .then(user => {

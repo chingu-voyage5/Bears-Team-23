@@ -10,7 +10,8 @@ module.exports = (express)=>{
 
     const api = express.Router();
 
-    require('./auth')(api, Users)
+    require('./auth')(api)
+    require('./routes')(api)
 
     return api;
 }

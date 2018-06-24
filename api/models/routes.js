@@ -3,18 +3,22 @@ const uniqueValidator = require('mongoose-unique-validator');
 const Schema = Mongoose.Schema;
 
 const routeSchema = Schema({
-  
-    route_id: {
-        type: String, 
-        required: true
-    },
+
     route_start: {
-        type: String, 
+        type: Array, 
         required: true 
     }, 
+    route_start_name:{
+        type:String,
+        required:true
+    },
     route_end:{
-        type: String, 
+        type: Array, 
         required: true
+    },
+    route_end_name:{
+        type:String,
+        required:true
     },
     est_trip_length: {
         type: String, 

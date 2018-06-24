@@ -32,6 +32,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    new webpack.ProvidePlugin({
+      mapboxgl: 'mapbox-gl'
+    }),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {

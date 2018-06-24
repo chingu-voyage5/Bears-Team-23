@@ -59,7 +59,7 @@ module.exports = (app, express) => {
   // error handler 
   app.use((err, req, res) => {
     res.locals.message = err.message
-    //Only prviding errors in development 
+    //Only providing errors in development 
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     res.status(err.status || 500);
     console.log(err);
