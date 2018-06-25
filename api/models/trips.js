@@ -6,7 +6,7 @@ const tripsSchema = Schema({
   
     trip_route_id: {
         type: Schema.Types.ObjectId, 
-        refs: 'Trip'
+        refs: 'Route'
     },
     trip_creator:{
         type: Schema.Types.ObjectId,
@@ -26,11 +26,11 @@ const tripsSchema = Schema({
     },
     trip_rating: {
         type: String, 
-        required: true
     },
     trip_status:{
         type: String, 
-        enum: ['created', 'ended']
+        enum: ['created', 'ended'],
+        default:'created'
     },
     isDeleted: {
         type: Boolean,

@@ -42,8 +42,9 @@ class AuthController {
             })
             .exec()
             .then(user => {
-                if (_.isEmpty(user)) {
-                    return responseService(401, 'error', res, 'Auth Error', null, err);
+                if (!user) {
+                    console.log("this is here")
+                    return responseService(401, 'error', res, 'Auth Error', null);
                 } else if (functions.decrypter(req.body.password, user.password)) {
                     const token = functions.encryptPayload({
                         email: user.email,
@@ -57,11 +58,8 @@ class AuthController {
                     //Delete Password & Token  so its not returned in the object to the user
                     delete user['password']; 
                     //Bind token to a custom header
-                    res.header('x-auth', token).send(user);
                     return responseService(200, 'success', res, 'User retrieved successfully', user);
-                } else {
-                    return responseService(401, 'error', res, 'Auth Error', null, err);
-                }
+                } 
             })
             .catch(e => {
                 return responseService(500, 'error', res, 'There was an error while trying to login', null, e);

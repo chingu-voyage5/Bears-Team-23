@@ -7,9 +7,20 @@ import Toasted from 'vue-toasted';
 import 'buefy/lib/buefy.css';
 import App from './App';
 import router from './router';
+import store from './store/store.js';
+import Auth from './mixin/auth';
 
 Vue.use(Buefy);
 Vue.use(Toasted);
+Vue.mixin(Auth);
+
+if (localStorage.vuex) {
+  const token = JSON.parse(localStorage.getItem('vuex')).auth.tokens[0].token;
+
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = token;
+  }
+}
 
 // if (process.env.NODE_ENV === 'development') {
 //   axios.defaults.baseURL = process.env.BASEURL_DEV;
@@ -23,6 +34,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

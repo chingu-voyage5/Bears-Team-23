@@ -1,14 +1,15 @@
 <template>
   <div>
+    <navbar/>
     <div class="container">
       <h3 class="is-size-3">Create a route</h3>
       <label for="routeFrom">Where you come from</label>
-      <autocomplete :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteFrom" encode-params="true" filter-by-anchor="true"
+      <autocomplete :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteFrom" :encode-params="true" :filter-by-anchor="true"
                     anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="
       />
 
       <label for="routeFrom">Where you are going to </label>
-      <autocomplete :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteTo" encode-params="true" filter-by-anchor="true"
+      <autocomplete :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteTo" :encode-params="true" :filter-by-anchor="true"
                     anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="
       />
      
@@ -27,14 +28,17 @@
   </div>
 </template>
 <script>
+import Navbar from '@/components/shared/Navbar';
 import Mapbox from 'mapbox-gl-vue';
 import Autocomplete from 'vue2-autocomplete-js';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'CreateRoute',
   components: {
     Mapbox,
-    Autocomplete
+    Autocomplete,
+    Navbar
   },
   data() {
     return {
@@ -56,20 +60,21 @@ export default {
     this.initMap();
   },
   methods: {
+    ...mapGetters(['user']),
     createRoute() {
       const routeBody = {
         route_start: [
           this.route.from.location.lat,
           this.route.from.location.lng
         ],
-        route_start_name:this.route.from.name,
+        route_start_name: this.route.from.name,
         route_end_name: this.route.to.name,
         route_end: [this.route.to.location.lat, this.route.to.location.lng],
         est_trip_length: this.durationCalc.text,
         est_trip_duration: this.distanceCalc.text,
-        route_creator: '5b2fe63641cba1276b377edf'
-      }; 
-  
+        route_creator: this.user()._id
+      };
+
       this.$axios
         .post('http://localhost:5000/api/route', routeBody)
         .then(resp => {

@@ -18,7 +18,7 @@ const encryptPayload = (payload) => {
 const requestAuthorization = (req, res, next) => {
 
   let bearerToken;
-  let bearerHeader = req.headers['x-auth'];
+  let bearerHeader = req.headers['authorization'];
   
   if (typeof bearerHeader !== 'undefined') {
 

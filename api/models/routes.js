@@ -30,7 +30,8 @@ const routeSchema = Schema({
     },
     route_creator: {
         type: Schema.Types.ObjectId, 
-        ref: 'User' 
+        ref: 'User', 
+        required: true 
     },
     is_return_route: {
         type: Boolean, 
