@@ -7,32 +7,33 @@ const responseService = functions.response;
 class AuthController {
 
     signup(req, res) {
-
         Users.findOne({
                 email: req.body.email
             })
             .exec()
             .then(user => {
-                if (!_.isEmpty(user)) {
+                if (user) {
                     return responseService(409, 'error', res, 'Mail Exists', null);
-                };
-                const User = {
-                    first_name: req.body.firstname,
-                    last_name: req.body.lastname,
-                    email: req.body.email,
-                    role: req.body.role,
-                    password: functions.hasher(req.body.password)
-                };
-                const new_user = new Users(User);
-                new_user
-                    .save()
-                    .then(user => {
-                        user = user.toObject();
-                        delete user['password'];
-                        return responseService(200, 'error', res, `Successfully Signed Up ${user.role}`, user);
-                    }).catch(e => {
-                        return responseService(500, 'error', res, 'There was an error', null, e);
-                    })
+                } else {
+                    const User = {
+                        first_name: req.body.firstname,
+                        last_name: req.body.lastname,
+                        email: req.body.email,
+                        role: req.body.role,
+                        password: functions.hasher(req.body.password)
+                    };
+                    const new_user = new Users(User);
+                    new_user
+                        .save()
+                        .then(user => {
+                            user = user.toObject();
+                            delete user['password'];
+                            return responseService(200, 'error', res, `Successfully Signed Up ${user.role}`, user);
+                        })
+                }
+            })
+            .catch(e => {
+                return responseService(500, 'error', res, 'There was an error', null, e);
             })
     };
 
@@ -43,7 +44,6 @@ class AuthController {
             .exec()
             .then(user => {
                 if (!user) {
-                    console.log("this is here")
                     return responseService(401, 'error', res, 'Auth Error', null);
                 } else if (functions.decrypter(req.body.password, user.password)) {
                     const token = functions.encryptPayload({
@@ -56,10 +56,10 @@ class AuthController {
                     });
                     user = user.toObject();
                     //Delete Password & Token  so its not returned in the object to the user
-                    delete user['password']; 
+                    delete user['password'];
                     //Bind token to a custom header
                     return responseService(200, 'success', res, 'User retrieved successfully', user);
-                } 
+                }
             })
             .catch(e => {
                 return responseService(500, 'error', res, 'There was an error while trying to login', null, e);

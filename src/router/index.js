@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import CreateRoute from '@/components/CreateRoute';
 import Login from '@/components/Login';
-import store from '@/store/store'; // your vuex store
+import Signup from '@/components/Signup';
+import store from '@/store/store';
 
 const ifNotAuthenticated = (to, from, next) => {
   if (!store.getters.isAuthenticated) {
@@ -25,6 +26,12 @@ Vue.use(Router);
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup,
+      beforeEnter: ifNotAuthenticated
+    },
     {
       path: '/login',
       name: 'Login',

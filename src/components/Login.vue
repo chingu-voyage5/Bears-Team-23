@@ -19,6 +19,8 @@
             </div>
           </div>
           <a class="button is-primary" @click="signIn">Login</a>
+          <hr>
+          <router-link to="/signup" class="is-size-6">Create an account</router-link>
         </div>
       </div>
     </div>

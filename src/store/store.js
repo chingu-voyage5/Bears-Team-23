@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
+import { pick } from 'lodash';
 
 Vue.use(Vuex);
 
@@ -47,13 +48,30 @@ const actions = {
     return data;
   },
 
-  async logout({commit}) {
-    return new Promise((resolve) => {
+  async logout({ commit }) {
+    return new Promise(resolve => {
       commit('set_auth', null);
       localStorage.removeItem('vuex');
       delete axios.defaults.headers.common['Authorization'];
       resolve();
     });
+  },
+
+  async signup({ commit }, credentials) {
+    const response = await axios.post(
+      'http://localhost:5000/api/signup',
+      credentials
+    );
+    const data = response.data.data;
+
+    const user = pick(data, [
+      'email',
+      'first_name',
+      'last_name',
+      'role',
+      '_id'
+    ]);
+    return data;
   }
 };
 

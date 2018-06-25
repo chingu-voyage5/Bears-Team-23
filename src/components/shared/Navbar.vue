@@ -55,7 +55,7 @@ export default {
     ...mapActions(['logout']),
     Logout() {
       this.logout().then(() => {
-          console.log("im heteer")
+        console.log('im heteer');
         this.$router.push('/login');
       });
     }
