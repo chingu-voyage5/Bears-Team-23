@@ -68,12 +68,12 @@ export default {
 </script>
 
 <style scoped>
-  .is-mybluebg{
-    background-color: #108CCE !important;
-    color: white;
-  }
+.is-mybluebg {
+  background-color: #108cce !important;
+  color: white;
+}
 
-  .is-myblue{
-    color:  #108CCE !important;
-  }
+.is-myblue {
+  color: #108cce !important;
+}
 </style>

@@ -10,19 +10,19 @@
           <hr>
           <div class="field">
             <div class="control">
-              <input type="text" class="input" v-model="firstname" placeholder="First Name">
+              <input v-model="firstname" type="text" class="input" placeholder="First Name">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input type="text" class="input" v-model="lastname" placeholder="Last Name">
+              <input v-model="lastname" type="text" class="input" placeholder="Last Name">
             </div>
           </div>
           <div class="field">
             <div class="control">
               <select v-model="role" class="input">
                 <option disabled selected value >Select Role</option>
-                <option :value="role" v-for="role in ['passenger', 'driver']" :key="role">{{ role }}</option>
+                <option v-for="role in ['passenger', 'driver']" :value="role" :key="role">{{ role }}</option>
               </select>
             </div>
           </div>
@@ -91,13 +91,12 @@ export default {
 </script>
       
       <style scoped>
-         .is-mybluebg{
-    background-color: #108CCE !important;
-    color: white;
-  }
+.is-mybluebg {
+  background-color: #108cce !important;
+  color: white;
+}
 
-   .is-myblue{
-   
-    color: #108CCE !important;
-  }
+.is-myblue {
+  color: #108cce !important;
+}
 </style>

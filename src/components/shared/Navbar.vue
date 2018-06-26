@@ -65,14 +65,14 @@ export default {
 </script>
 
 <style scoped>
-  p{
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-weight: 600
-  }
+p {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: 600;
+}
 
-   .is-mybluebg{
-    background-color: #108CCE !important;
-    color: white;
-  }
+.is-mybluebg {
+  background-color: #108cce !important;
+  color: white;
+}
 </style>
