@@ -4,22 +4,23 @@ import Vue from 'vue';
 import axios from 'axios';
 import Buefy from 'buefy';
 import Toasted from 'vue-toasted';
+import Datetime from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
 import 'buefy/lib/buefy.css';
 import App from './App';
 import router from './router';
 import store from './store/store.js';
-import Datetime from 'vue-datetime'
+
 // You need a specific loader for CSS files
-import 'vue-datetime/dist/vue-datetime.css'
+;
 
-Vue.use(Datetime)
+Vue.use(Datetime);
 
-Vue.component('icon', Icon)
+Vue.component('icon', Icon);
 Vue.use(Buefy);
 Vue.use(Toasted);
-
 
 if (localStorage.vuex) {
   const token = JSON.parse(localStorage.getItem('vuex')).auth.tokens[0].token;

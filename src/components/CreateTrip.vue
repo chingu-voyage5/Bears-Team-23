@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          <div class="box" v-if="route !== null"> 
+          <div v-if="route !== null" class="box"> 
             <div class="topcontent">
               <h3 class="is-size-4">Date & Time</h3>
                     
@@ -79,15 +79,15 @@
             </div>
             <div id="map-canvas" />
             <div v-if="route!==null" >
-                    <p class="is-size-6">
-                      Distance between {{ route.route_start_name }} & {{ route.route_end_name }} :
-                      <span class="route-info">{{ route.est_trip_length }}</span>
-                    </p>
-                    <p class="is-size-6">
-                      Usual Time Duration :
-                      <span class="route-info">{{ route.est_trip_duration }}</span>
-                    </p>
-                  </div>
+              <p class="is-size-6">
+                Distance between {{ route.route_start_name }} & {{ route.route_end_name }} :
+                <span class="route-info">{{ route.est_trip_length }}</span>
+              </p>
+              <p class="is-size-6">
+                Usual Time Duration :
+                <span class="route-info">{{ route.est_trip_duration }}</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -116,9 +116,9 @@ export default {
       directionsDisplay: null,
       map: null,
       routes: null,
-     returntime:null,
-     departtime:null,
-      roundtrip:true
+      returntime: null,
+      departtime: null,
+      roundtrip: true
     };
   },
   mounted() {
@@ -283,8 +283,7 @@ label p {
   border: 1px solid #ecf0f1 !important;
 }
 
-.route-focus :hover{
-    border-color: 2px solid #108cce !important;   
+.route-focus :hover {
+  border-color: 2px solid #108cce !important;
 }
-
 </style>
