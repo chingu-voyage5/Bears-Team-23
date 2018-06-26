@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import CreateRoute from '@/components/CreateRoute';
+import CreateTrip from '@/components/CreateTrip';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
 import store from '@/store/store';
@@ -42,6 +43,12 @@ export default new Router({
       path: '/route/create',
       name: 'CreateRoute',
       component: CreateRoute,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/trip/create',
+      name: 'CreateTrip',
+      component: CreateTrip,
       beforeEnter: ifAuthenticated
     }
   ]

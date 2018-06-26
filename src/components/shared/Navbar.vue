@@ -22,7 +22,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
                        
-            <div v-if="isAuth" class="field is-grouped">
+            <div v-if="isAuthenticated" class="field is-grouped">
               <p class="is-size-6 navbar-item">Welcome {{ user().first_name }} {{ user().last_name }}</p>
               <p class="control">
                 <a class="button is-danger">
@@ -53,6 +53,7 @@ export default {
   methods: {
     ...mapGetters(['user']),
     ...mapActions(['logout']),
+    ...mapGetters(['isAuthenticated']),
     Logout() {
       this.logout().then(() => {
         console.log('im heteer');

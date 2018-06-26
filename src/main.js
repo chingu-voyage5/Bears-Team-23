@@ -10,12 +10,10 @@ import 'buefy/lib/buefy.css';
 import App from './App';
 import router from './router';
 import store from './store/store.js';
-import Auth from './mixin/auth';
 
 Vue.component('icon', Icon)
 Vue.use(Buefy);
 Vue.use(Toasted);
-Vue.mixin(Auth);
 
 
 if (localStorage.vuex) {
