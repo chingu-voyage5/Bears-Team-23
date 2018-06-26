@@ -4,9 +4,9 @@
     <div class="container">
       <div class="columns">
         <div class="column is-one-third is-centered">
-          <h4 class="is-size-4">
+          <h2 class="is-size-2 is-my-blue">
             Login
-          </h4>
+          </h2>
           <hr>
           <div class="field">
             <div class="control">
@@ -18,9 +18,9 @@
               <input v-model="password" class="input" type="password" placeholder="password">
             </div>
           </div>
-          <a class="button is-primary" @click="signIn">Login</a>
+          <a class="button is-mybluebg" @click="signIn">Login</a>
           <hr>
-          <router-link to="/signup" class="is-size-6">Create an account</router-link>
+          <router-link to="/signup" class="is-size-6 is-myblue">Create an account</router-link>
         </div>
       </div>
     </div>
@@ -68,4 +68,12 @@ export default {
 </script>
 
 <style scoped>
+  .is-mybluebg{
+    background-color: #108CCE !important;
+    color: white;
+  }
+
+  .is-myblue{
+    color:  #108CCE !important;
+  }
 </style>

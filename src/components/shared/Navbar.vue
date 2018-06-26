@@ -32,7 +32,7 @@
             </div>
             <div v-else class="field is-grouped">
               <p class="control">
-                <router-link to="/login" class="button is-primary">Login</router-link>
+                <router-link to="/login" class="button is-mybluebg">Login</router-link>
               </p>
             </div>
           </div>
@@ -68,5 +68,10 @@ export default {
     padding-top: 5px;
     padding-bottom: 5px;
     font-weight: 600
+  }
+
+   .is-mybluebg{
+    background-color: #108CCE !important;
+    color: white;
   }
 </style>

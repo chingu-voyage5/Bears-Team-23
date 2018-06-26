@@ -4,9 +4,9 @@
     <div class="container">
       <div class="columns">
         <div class="column is-one-third is-centered">
-          <h4 class="is-size-4">
+          <h2 class="is-size-2">
             Sign up
-          </h4>
+          </h2>
           <hr>
           <div class="field">
             <div class="control">
@@ -19,9 +19,9 @@
             </div>
           </div>
           <div class="field">
-                <label for="role" class="label">Role</label>
             <div class="control">
-              <select v-model="role">
+              <select v-model="role" class="input">
+                <option disabled selected value >Select Role</option>
                 <option :value="role" v-for="role in ['passenger', 'driver']" :key="role">{{ role }}</option>
               </select>
             </div>
@@ -36,9 +36,9 @@
               <input v-model="password" class="input" type="password" placeholder="password">
             </div>
           </div>
-          <a class="button is-primary" @click="signUp">Sign Up</a>
+          <a class="button is-mybluebg" @click="signUp">Sign Up</a>
           <hr>
-          <router-link to="/login" class="is-size-6">Login to account</router-link>
+          <router-link to="/login" class="is-size-6 is-myblue">Login to account</router-link>
         </div>
       </div>
     </div>
@@ -91,4 +91,13 @@ export default {
 </script>
       
       <style scoped>
+         .is-mybluebg{
+    background-color: #108CCE !important;
+    color: white;
+  }
+
+   .is-myblue{
+   
+    color: #108CCE !important;
+  }
 </style>
