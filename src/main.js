@@ -4,15 +4,19 @@ import Vue from 'vue';
 import axios from 'axios';
 import Buefy from 'buefy';
 import Toasted from 'vue-toasted';
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon';
 import 'buefy/lib/buefy.css';
 import App from './App';
 import router from './router';
 import store from './store/store.js';
 import Auth from './mixin/auth';
 
+Vue.component('icon', Icon)
 Vue.use(Buefy);
 Vue.use(Toasted);
 Vue.mixin(Auth);
+
 
 if (localStorage.vuex) {
   const token = JSON.parse(localStorage.getItem('vuex')).auth.tokens[0].token;

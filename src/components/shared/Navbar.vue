@@ -23,7 +23,7 @@
           <div class="navbar-item">
                        
             <div v-if="isAuth" class="field is-grouped">
-              <p class="is-size-6 control">Welcome {{ user().first_name }} {{ user().last_name }}</p>
+              <p class="is-size-6 navbar-item">Welcome {{ user().first_name }} {{ user().last_name }}</p>
               <p class="control">
                 <a class="button is-danger">
                   <span @click="Logout">Logout</span>
@@ -64,4 +64,9 @@ export default {
 </script>
 
 <style scoped>
+  p{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: 600
+  }
 </style>
