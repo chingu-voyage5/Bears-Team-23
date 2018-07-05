@@ -13,9 +13,6 @@ import App from './App';
 import router from './router';
 import store from './store/store.js';
 
-// You need a specific loader for CSS files
-;
-
 Vue.use(Datetime);
 
 Vue.component('icon', Icon);

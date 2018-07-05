@@ -2,15 +2,15 @@ const Mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const Schema = Mongoose.Schema;
 
-const tripsSchema = Schema({
+const tripsSchema = new Schema({
   
-    trip_route_id: {
+    route: {
         type: Schema.Types.ObjectId, 
-        refs: 'Route'
+        ref: 'Route'
     },
     trip_creator:{
         type: Schema.Types.ObjectId,
-        refs: 'User'
+        ref: 'User'
     },
     trip_passengers: {
         type: Array, 
@@ -19,6 +19,9 @@ const tripsSchema = Schema({
     trip_start_time: {
         type: Date, 
         required: true
+    },
+    trip_return_time: {
+        type: Date
     },
     trip_days:{
         type: Array,
@@ -29,7 +32,7 @@ const tripsSchema = Schema({
     },
     trip_status:{
         type: String, 
-        enum: ['created', 'ended'],
+        enum: ['created','started','ended'],
         default:'created'
     },
     isDeleted: {

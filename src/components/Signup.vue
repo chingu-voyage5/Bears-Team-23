@@ -63,10 +63,11 @@ export default {
       role: ''
     };
   },
+  computed:{
+    ...mapActions(['signup']),
+  },
   mounted() {},
   methods: {
-    ...mapActions(['signup']),
-    ...mapGetters(['token']),
     async signUp() {
       const credentials = {
         email: this.email,

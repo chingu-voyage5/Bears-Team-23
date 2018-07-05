@@ -3,7 +3,7 @@ const functions = require('../utils');
 const uniqueValidator = require('mongoose-unique-validator');
 const Schema = Mongoose.Schema;
 
-const userSchema = Schema({
+const userSchema = new Schema({
     first_name: {
         type: String,
         required: true

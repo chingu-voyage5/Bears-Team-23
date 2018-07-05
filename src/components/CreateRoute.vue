@@ -100,20 +100,22 @@ export default {
     this.distanceMatrix = new google.maps.DistanceMatrixService();
     this.initMap();
   },
-  methods: {
+  computed:{
     ...mapGetters(['user']),
+  },
+  methods: {
     createRoute() {
       const routeBody = {
         route_start: [
           this.route.from.location.lat,
           this.route.from.location.lng
         ],
-        route_start_name: this.route.from.name,
-        route_end_name: this.route.to.name,
+        route_start_name: this.route.from.name.trim(),
+        route_end_name: this.route.to.name.trim(),
         route_end: [this.route.to.location.lat, this.route.to.location.lng],
         est_trip_length: this.durationCalc.text,
         est_trip_duration: this.distanceCalc.text,
-        route_creator: this.user()._id
+        route_creator: this.user._id
       };
 
       this.$axios

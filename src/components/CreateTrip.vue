@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <a class="button is-mybluebg pull-right" @click="createRoute">Create Trip</a>
+          <a class="button is-mybluebg pull-right" @click="createTrip">Create Trip</a>
 
          
 
@@ -115,7 +115,6 @@ export default {
       directionsService: null,
       directionsDisplay: null,
       map: null,
-      routes: null,
       returntime: null,
       departtime: null,
       roundtrip: true
@@ -126,27 +125,29 @@ export default {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.getRoutes();
   },
-  methods: {
+  computed:{
     ...mapGetters(['user']),
-    createRoute() {
-      const routeBody = {
-        route_start: [
-          this.route.from.location.lat,
-          this.route.from.location.lng
-        ],
-        route_start_name: this.route.from.name,
-        route_end_name: this.route.to.name,
-        route_end: [this.route.to.location.lat, this.route.to.location.lng],
-        route_creator: this.user()._id
+  },
+  methods: {
+   
+    createTrip() {
+      const tripBody = {
+        route: this.route._id,
+        trip_creator:this.user._id,
+        trip_start_time: this.departtime,
+        trip_from: this.route.route_start_name.trim(),
+        trip_to: this.route.route_end_name.trim()
       };
-
+      if(this.roundtrip){
+        tripBody.trip_return_time = this.returntime;
+      }
       this.$axios
-        .post('http://localhost:5000/api/route', routeBody)
+        .post('http://localhost:5000/api/trips', tripBody)
         .then(resp => {
           this.$toasted.success(resp.data.message).goAway(5000);
         })
         .catch(e => {
-          this.$toasted.error(err.response.data.message).goAway(5000);
+          this.$toasted.error(e.response.data.message).goAway(5000);
         });
     },
 

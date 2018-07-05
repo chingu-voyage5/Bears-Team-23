@@ -32,6 +32,16 @@ class RoutesController {
             return responseService(500,'error', res, 'An Error occured', null, e);
         })
     }
+
+    tripSearch(req, res){
+        console.log(req.query)
+        Route.find({
+            route_start_name: JSON.parse(req.query.from).name,
+            route_end_name: JSON.parse(req.query.to).name
+        }).populate({'path':'trips', 'match': {trip_status: 'created'}}).exec().then(data=>{
+            return res.status(200).json(data)
+        })
+    }
 }
 
 module.exports = new RoutesController;

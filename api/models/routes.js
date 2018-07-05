@@ -2,7 +2,7 @@ const Mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const Schema = Mongoose.Schema;
 
-const routeSchema = Schema({
+const routeSchema = new Schema({
 
     route_start: {
         type: Array, 
@@ -43,8 +43,11 @@ const routeSchema = Schema({
     isDeleted: {
         type: Boolean,
         default: false
-    }
-
+    },
+    trips:[{
+        type: Schema.Types.ObjectId  ,
+        ref:'Trip'      
+    }]
 
 }, {
     timestamps: true

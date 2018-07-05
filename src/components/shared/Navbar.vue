@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar is-transparent">
+    <nav class="navbar is-transparent is-fixed-top">
       <div class="navbar-brand">
         <a class="navbar-item">
           <h4 class="is-size-4">#</h4>
@@ -22,7 +22,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
                        
-            <div v-if="isAuthenticated" class="field is-grouped">
+            <div v-if="isAuthenticated() === true" class="field is-grouped">
               <p class="is-size-6 navbar-item">Welcome {{ user().first_name }} {{ user().last_name }}</p>
               <p class="control">
                 <a class="button is-danger">
@@ -32,7 +32,10 @@
             </div>
             <div v-else class="field is-grouped">
               <p class="control">
-                <router-link to="/login" class="button is-mybluebg">Login</router-link>
+                <router-link to="/signup" class="button is-mybluebg">Sign Up</router-link>
+              </p>
+              <p class="control">
+                <router-link to="/login" class="button is-mybluebg">Sign In</router-link>
               </p>
             </div>
           </div>

@@ -42,10 +42,12 @@ export default {
       password: ''
     };
   },
+  computed:{
+    ...mapGetters(['token']),
+  },
   mounted() {},
   methods: {
     ...mapActions(['login']),
-    ...mapGetters(['token']),
     async signIn() {
       const credentials = {
         email: this.email,
@@ -54,7 +56,7 @@ export default {
       try {
         const response = await this.login(credentials);
         if (response) {
-          this.$axios.defaults.headers.common['Authorization'] = this.token();
+          this.$axios.defaults.headers.common['Authorization'] = this.token;
           this.$toasted.success('Successfully logged in').goAway(5000);
           this.$router.push('/route/create');
         }
