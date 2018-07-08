@@ -13,7 +13,7 @@
             </div>
             <div class="columns">
               <div v-if="retrievedRoutes" class="column is-half">
-                <div v-for="route in retrievedRoutes" class="box route-focus" tabindex="0" @click="openRoute(route)">
+                <div v-for="route in retrievedRoutes" :key="route.id" class="box route-focus" tabindex="0" @click="openRoute(route)">
                   <div class="start">
                     <img src="../assets/img/start.png" class="image is-8x8" alt="start">
                     <p class="is-size-6">
@@ -49,7 +49,7 @@
                 <span class="icon is-small is-left">
                   <i class="fa fa-calendar"/>
                 </span>
-                <datetime v-model="departtime" type="datetime"/>
+                <datetime v-model="departtime" type="date"/>
               </div>
               <span v-if="roundtrip">
                 <label for="routeFrom">
@@ -120,25 +120,24 @@ export default {
       roundtrip: true
     };
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   mounted() {
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.getRoutes();
   },
-  computed:{
-    ...mapGetters(['user']),
-  },
   methods: {
-   
     createTrip() {
       const tripBody = {
         route: this.route._id,
-        trip_creator:this.user._id,
+        trip_creator: this.user._id,
         trip_start_time: this.departtime,
         trip_from: this.route.route_start_name.trim(),
         trip_to: this.route.route_end_name.trim()
       };
-      if(this.roundtrip){
+      if (this.roundtrip) {
         tripBody.trip_return_time = this.returntime;
       }
       this.$axios

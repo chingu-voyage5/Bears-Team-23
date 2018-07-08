@@ -4,7 +4,7 @@
     <div class="container">
       <div class="columns">
         <div class="column is-half">
-          <h3 class="is-size-2 route-head">Create a route for your journey</h3>
+          <h3 class="is-size-2 route-head">Offer a ride on your next journey</h3>
           <hr>
           <div class="box">
             <div class="topcontent">
@@ -33,12 +33,59 @@
                               :encode-params="true" :filter-by-anchor="true" anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="
                 />
               </div>
+              <label for="Date">
+                <p class="is-size-6">No of Passengers</p>
+              </label>
+              <div class="control has-icons-left has-icons-right">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-user"/>
+                </span>
+                <input v-model="passengers" class="input" type="number">
+              </div>
+              <hr>
+              <div class="topcontent">
+                <h3 class="is-size-4">Date & Time</h3>
+                          
+                <label class="checkbox">
+                  <input v-model="roundtrip" type="checkbox">
+                  Round Trip
+                </label>
+              </div>
+                                  
+                                         
+              <div class="content">
+                <label for="Date">
+                  <p class="is-size-6">Departure Date</p>
+                </label>
+                <div class="control has-icons-left has-icons-right">
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-calendar"/>
+                  </span>
+                  <datetime v-model="departtime" type="date"/>
+                </div>
+                <span v-if="roundtrip">
+                  <label for="routeFrom">
+                    <p class="is-size-6">Return Date</p>
+                  </label>
+                  <div class="control has-icons-left has-icons-right">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa fa-calendar"/>
+                    </span>
+                        
+                  </div>
+                    
+                  <datetime v-model="returntime" type="date"/>
+                </span> 
+                  
+                 
+              </div>
             </div>
           </div>
+        
 
 
 
-          <a class="button is-myblue pull-right" @click="createRoute">Create Route</a>
+          <a class="button is-myblue pull-right" @click="createRoute">Create Trip</a>
 
           <div v-if="distanceCalc !== null && durationCalc !==null">
             <p class="is-size-6">
@@ -58,6 +105,17 @@
             </div>
             <div id="map-canvas" />
           </div>
+          <div class="box">
+              <label for="Extra Info">
+                  <p class="is-size-6">Extra Information / Comment</p>
+                </label>
+                <div class="control has-icons-left has-icons-right">
+                  <span class="icon is-small is-left">
+                    <i class="fa fa fa-pen"/>
+                  </span>
+                  <textarea v-model="extra" class="textarea" cols="3" rows="3"></textarea>
+                </div>
+            </div>
           
         </div>
       </div>
@@ -91,8 +149,16 @@ export default {
       directionsDisplay: null,
       distanceCalc: null,
       durationCalc: null,
-      map: null
+      map: null,
+      roundtrip: true,
+      passengers: null,
+      departtime: null,
+      returntime: null,
+      extra: null
     };
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   mounted() {
     this.directionsService = new google.maps.DirectionsService();
@@ -100,32 +166,71 @@ export default {
     this.distanceMatrix = new google.maps.DistanceMatrixService();
     this.initMap();
   },
-  computed:{
-    ...mapGetters(['user']),
-  },
   methods: {
-    createRoute() {
+    async createRoute() {
       const routeBody = {
+        route_start_name:  this.route.from.name.trim(),
+        route_end_name: this.route.to.name.trim(),
         route_start: [
+         
           this.route.from.location.lat,
           this.route.from.location.lng
         ],
-        route_start_name: this.route.from.name.trim(),
-        route_end_name: this.route.to.name.trim(),
-        route_end: [this.route.to.location.lat, this.route.to.location.lng],
+        route_end: [
+          
+          this.route.to.location.lat,
+          this.route.to.location.lng
+        ],
         est_trip_length: this.durationCalc.text,
         est_trip_duration: this.distanceCalc.text,
-        route_creator: this.user._id
+        route_creator: this.user._id,
+        passenger_space: this.passengers,
+        trip_start: this.departtime,
+        passenger: new Array(this.passengers).fill(null),
+        extra: this.extra
       };
 
-      this.$axios
-        .post('http://localhost:5000/api/route', routeBody)
-        .then(resp => {
-          this.$toasted.success(resp.data.message).goAway(5000);
-        })
-        .catch(e => {
-          this.$toasted.error(err.response.data.message).goAway(5000);
-        });
+      if (this.returntime && this.roundtrip) {
+
+        const returnRouteBody = Object.assign({}, routeBody);
+        let temp;
+        let temp_name;
+        temp = returnRouteBody.route_start;
+        temp_name = returnRouteBody.route_start_name
+        returnRouteBody.route_start = returnRouteBody.route_end;
+        returnRouteBody.route_start_name = returnRouteBody.route_end_name;
+        returnRouteBody.route_end = temp;
+        returnRouteBody.route_end_name = temp_name;
+        routeBody.has_return_route = true;
+        returnRouteBody.trip_start = this.returntime;
+
+        try {
+          const originalTrip = (await this.$axios.post(
+            'http://localhost:5000/api/route',
+            routeBody
+          )).data;
+          
+          returnRouteBody.init_route = originalTrip.data._id;
+          const returnTrip = (await this.$axios.post(
+            'http://localhost:5000/api/route',
+            returnRouteBody
+          )).data;
+
+          this.$toasted.success(returnTrip.message).goAway(5000);
+        } catch (err) {
+          this.$toasted.error(err).goAway(5000);
+        }
+      } else {
+        try {
+          const originalTrip = (await this.$axios.post(
+            'http://localhost:5000/api/route',
+            routeBody
+          )).data;
+          this.$toasted.success(originalTrip.message).goAway(5000);
+        } catch (err) {
+          this.$toasted.error(err).goAway(5000);
+        }
+      }
     },
     processJSON(json) {
       return json.results;
@@ -308,7 +413,6 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-bottom: 20px;
-  border-bottom: 2px #eeeeee solid;
   color: #108cce;
 }
 

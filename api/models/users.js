@@ -44,6 +44,9 @@ const userSchema = new Schema({
     rating: {
         type: String
     },
+    gender:{
+        type: String
+    },
     password: {
         type: String,
         required: true,
@@ -62,6 +65,20 @@ const userSchema = new Schema({
     isDeleted: {
         type: Boolean,
         default: false
+    },
+    image:{
+        type: String
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+    age:{
+        type: String
+    },
+    verifications:{
+        type: Array,
+        default: []
     }
 
 }, {

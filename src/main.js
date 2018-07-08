@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import Buefy from 'buefy';
+import Moment from 'vue-moment';
 import Toasted from 'vue-toasted';
 import Datetime from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css';
@@ -14,6 +15,7 @@ import router from './router';
 import store from './store/store.js';
 
 Vue.use(Datetime);
+Vue.use(Moment);
 
 Vue.component('icon', Icon);
 Vue.use(Buefy);

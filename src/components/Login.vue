@@ -42,8 +42,8 @@ export default {
       password: ''
     };
   },
-  computed:{
-    ...mapGetters(['token']),
+  computed: {
+    ...mapGetters(['token'])
   },
   mounted() {},
   methods: {
@@ -58,7 +58,7 @@ export default {
         if (response) {
           this.$axios.defaults.headers.common['Authorization'] = this.token;
           this.$toasted.success('Successfully logged in').goAway(5000);
-          this.$router.push('/route/create');
+          this.$router.push('/');
         }
       } catch (error) {
         const errorMessage = error.message;

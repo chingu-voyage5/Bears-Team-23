@@ -13,8 +13,8 @@
               <div class="field">
                 <p class="control has-icons-left">
                   <autocomplete :classes="{input:'input is-medium'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteFrom" :encode-params="true"
-                                :filter-by-anchor="true" placeholder="Leaving from..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="></autocomplete>
-                 <span class="icon is-small is-left">
+                                :filter-by-anchor="true" placeholder="Leaving from..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
+                  <span class="icon is-small is-left">
                     <i class="fa fa-circle is-myblue"/>
                   </span>
                 </p>
@@ -24,8 +24,8 @@
               <div class="field">
                 <p class="control has-icons-left">
                   <autocomplete :classes="{input:'input is-medium'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteTo" :encode-params="true"
-                                :filter-by-anchor="true" placeholder="Going to..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="></autocomplete>
-                                <span class="icon is-small is-left ">
+                                :filter-by-anchor="true" placeholder="Going to..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
+                  <span class="icon is-small is-left ">
                     <i class="fa fa-circle is-myblue"/>
                   </span>
                 </p>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Navbar from '@/components/shared/Navbar';
 import Autocomplete from 'vue2-autocomplete-js';
 import 'vue2-autocomplete-js/dist/style/vue2-autocomplete.css';
@@ -72,6 +73,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['searchTrip']),
     processJSON(json) {
       return json.results;
     },
@@ -86,10 +88,10 @@ export default {
         name: data.formatted_address,
         location: data.geometry.location
       };
-    }, 
-    async findRide(){
-        const rideResults = await this.$axios.get('http://localhost:5000/api/find', {params:this.journey});
-        console.log(rideResults,'ride results');
+    },
+    async findRide() {
+      this.searchTrip(this.journey);
+      this.$router.push('/search');
     }
   }
 };
@@ -119,6 +121,6 @@ export default {
 }
 
 .icon {
-    height: 100% !important;
+  height: 100% !important;
 }
 </style>

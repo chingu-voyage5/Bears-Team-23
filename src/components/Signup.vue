@@ -63,8 +63,8 @@ export default {
       role: ''
     };
   },
-  computed:{
-    ...mapActions(['signup']),
+  computed: {
+    ...mapActions(['signup'])
   },
   mounted() {},
   methods: {

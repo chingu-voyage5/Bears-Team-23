@@ -14,16 +14,23 @@
           
       <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="https://bulma.io/">
+          <router-link class="navbar-item" to="/">
             Home
-          </a>
+          </router-link>
         </div>
           
         <div class="navbar-end">
           <div class="navbar-item">
+            <div class="field">
+                <p class="control">
+                    <router-link to="/route/create" class="button is-mybluebg">Offer a ride</router-link>
+                  </p>
+            </div>
+          </div>
+          <div class="navbar-item">
                        
-            <div v-if="isAuthenticated() === true" class="field is-grouped">
-              <p class="is-size-6 navbar-item">Welcome {{ user().first_name }} {{ user().last_name }}</p>
+            <div v-if="isAuthenticated === true" class="field is-grouped">
+              <p class="is-size-6 navbar-item">Welcome {{ user.first_name }} {{ user.last_name }}</p>
               <p class="control">
                 <a class="button is-danger">
                   <span @click="Logout">Logout</span>
@@ -53,10 +60,12 @@ export default {
   data() {
     return {};
   },
-  methods: {
+  computed:{
     ...mapGetters(['user']),
-    ...mapActions(['logout']),
     ...mapGetters(['isAuthenticated']),
+  },
+  methods: {
+    ...mapActions(['logout']),
     Logout() {
       this.logout().then(() => {
         console.log('im heteer');

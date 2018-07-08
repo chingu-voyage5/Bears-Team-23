@@ -5,6 +5,8 @@ import CreateTrip from '@/components/CreateTrip';
 import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
+import SearchResult from '@/components/SearchedTrips';
+import SearchSelected from '@/components/SearchSelected';
 import store from '@/store/store';
 
 const ifNotAuthenticated = (to, from, next) => {
@@ -56,6 +58,16 @@ export default new Router({
       name: 'CreateTrip',
       component: CreateTrip,
       beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/search',
+      name: 'SearchResult',
+      component: SearchResult
+    },
+    {
+      path: '/search/selected',
+      name: 'SearchSelected',
+      component: SearchSelected
     }
   ]
 });

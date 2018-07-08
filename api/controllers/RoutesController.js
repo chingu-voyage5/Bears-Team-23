@@ -6,14 +6,15 @@ const responseService = functions.response;
 
 class RoutesController {
     create(req, res){
+        console.log(req.body)
         const route = new Route(req.body);
         route
         .save()
         .then(route =>{
-            responseService(200,'success',res,'Route Was successfully created', route);
+            responseService(200,'success',res,'Trip Was successfully created', route);
         })
         .catch(err=>{
-            responseService(500,'error', res,'Error occured while creating route',null,err);
+            responseService(500,'error', res,'Error occured while creating trip',null,err);
         })
     };
 
@@ -36,10 +37,12 @@ class RoutesController {
     tripSearch(req, res){
         console.log(req.query)
         Route.find({
-            route_start_name: JSON.parse(req.query.from).name,
-            route_end_name: JSON.parse(req.query.to).name
-        }).populate({'path':'trips', 'match': {trip_status: 'created'}}).exec().then(data=>{
-            return res.status(200).json(data)
+            route_start_name:  "Ikoyi, Lagos, Nigeria",
+            // JSON.parse(req.query.from).name,
+            route_end_name: "Sangotedo, Nigeria"
+            // JSON.parse(req.query.to).name
+        }).populate({'path':'trips', 'match': {trip_status: 'created'}}).populate('route_creator').exec().then(data=>{
+            return responseService(200,'success', res, 'Successfully retrieved trips', data);
         })
     }
 }

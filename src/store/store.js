@@ -7,7 +7,10 @@ import { pick } from 'lodash';
 Vue.use(Vuex);
 
 const state = {
-  auth: null
+  auth: null,
+  searchResult: null,
+  searchParams: null,
+  selectedIndex: null
 };
 
 const getters = {
@@ -19,12 +22,27 @@ const getters = {
   },
   token(state) {
     return state.auth ? state.auth.tokens[0].token : '';
+  },
+  search(state) {
+    return state.searchResult ? state.searchResult : '';
+  },
+  searchParams(state) {
+    return state.searchParams ? state.searchParams : '';
   }
 };
 
 const mutations = {
   set_auth(state, authData) {
     state.auth = authData;
+  },
+  set_search_params(state, payload) {
+    state.searchParams = payload;
+  },
+  set_search(state, payload) {
+    state.searchResult = payload;
+  },
+  selected_search(state, payload) {
+    state.selectedIndex = payload;
   }
 };
 
@@ -57,7 +75,7 @@ const actions = {
     });
   },
 
-  async signup({ commit }, credentials) {
+  async signup(credentials) {
     const response = await axios.post(
       'http://localhost:5000/api/signup',
       credentials
@@ -71,7 +89,15 @@ const actions = {
       'role',
       '_id'
     ]);
-    return data;
+    return user;
+  },
+
+  async searchTrip({ commit }, search) {
+    const rideResults = (await axios.get('http://localhost:5000/api/find', {
+      params: search
+    })).data.data;
+    commit('set_search_params', search);
+    commit('set_search', rideResults);
   }
 };
 
