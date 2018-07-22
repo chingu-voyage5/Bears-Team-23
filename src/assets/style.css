@@ -10,3 +10,9 @@ p{
 .box{
     border-radius: 0px !important;
   }
+
+  .is-myblue {
+    background-color: #108cce !important;
+    color: white;
+  }
+  

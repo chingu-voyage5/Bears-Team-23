@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar is-transparent is-fixed-top">
+    <nav class="navbar is-transparent is-top">
       <div class="navbar-brand">
         <a class="navbar-item">
           <h4 class="is-size-4">#</h4>
@@ -30,12 +30,28 @@
           <div class="navbar-item">
                        
             <div v-if="isAuthenticated === true" class="field is-grouped">
-              <p class="is-size-6 navbar-item">Welcome {{ user.first_name }} {{ user.last_name }}</p>
-              <p class="control">
-                <a class="button is-danger">
-                  <span @click="Logout">Logout</span>
-                </a>
-              </p>
+              <p class="is-size-6 navbar-item">Hello, {{ user.first_name }} {{ user.last_name }}</p>
+
+              <div class="dropdown is-right" :class="{'is-active':menuState }" @click="toggleMenu">
+                <div class="dropdown-trigger">
+                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                   
+                    <span class="icon is-small">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="#" class="dropdown-item" @click="dashboard">
+                     Dashboard                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item" @click="_logout">
+                      Logout
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
             <div v-else class="field is-grouped">
               <p class="control">
@@ -58,19 +74,25 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Navbar',
   data() {
-    return {};
+    return {
+      menuState: false
+    };
   },
   computed:{
-    ...mapGetters(['user']),
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['user', 'isAuthenticated']),
   },
   methods: {
     ...mapActions(['logout']),
-    Logout() {
-      this.logout().then(() => {
-        console.log('im heteer');
+    _logout() {
+      this.logout().then(() => {  
         this.$router.push('/login');
       });
+    },
+    toggleMenu(){
+      this.menuState = !this.menuState;
+    }, 
+    dashboard(){
+      this.$router.push('/dashboard');
     }
   }
 };
