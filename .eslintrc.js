@@ -26,7 +26,8 @@ module.exports = {
       'no-console': 'off',
       'vue/max-attributes-per-line': 'off',
       'prettier/prettier': [ 'error', {
-        'singleQuote': true
+        'singleQuote': true,
+        'usetabs':false
       }],
       "import/no-unresolved": "off",
       "import/extensions":"off"

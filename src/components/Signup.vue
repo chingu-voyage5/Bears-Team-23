@@ -36,7 +36,7 @@
               <input v-model="password" class="input" type="password" placeholder="password">
             </div>
           </div>
-          <a class="button is-mybluebg" @click="signUp">Sign Up</a>
+          <a class="button is-mybluebg" @click="signingUp">Sign Up</a>
           <hr>
           <router-link to="/login" class="is-size-6 is-myblue">Login to account</router-link>
         </div>
@@ -64,11 +64,12 @@ export default {
     };
   },
   computed: {
-    ...mapActions(['signup'])
+   
   },
   mounted() {},
   methods: {
-    async signUp() {
+    ...mapActions(['signup']),
+    async signingUp() {
       const credentials = {
         email: this.email,
         password: this.password,
@@ -76,6 +77,7 @@ export default {
         lastname: this.lastname,
         role: this.role
       };
+
       try {
         const response = await this.signup(credentials);
         if (response) {

@@ -42,7 +42,8 @@ Vue.use(Router);
 
 export default new Router({
   mode: 'history',
-  routes: [{
+  routes: [
+    {
       path: '/',
       name: 'Home',
       component: Home
@@ -104,7 +105,8 @@ export default new Router({
       path: '/profile',
       name: 'DashboardProfile',
       component: Profile,
-      children: [{
+      children: [
+        {
           path: 'general',
           component: ProfileGeneral
         },
@@ -141,7 +143,7 @@ export default new Router({
           component: ProfileCloseAccount
         }
       ],
-      beforeEnter: ifAuthenticated,
-    },
+      beforeEnter: ifAuthenticated
+    }
   ]
 });

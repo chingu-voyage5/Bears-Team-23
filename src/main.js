@@ -21,6 +21,7 @@ Vue.component('icon', Icon);
 Vue.use(Buefy);
 Vue.use(Toasted);
 
+
 if (localStorage.vuex) {
   const token = JSON.parse(localStorage.getItem('vuex')).auth.tokens[0].token;
 

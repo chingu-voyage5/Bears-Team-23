@@ -22,9 +22,9 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="field">
-                <p class="control">
-                    <router-link to="/route/create" class="button is-mybluebg">Offer a ride</router-link>
-                  </p>
+              <p class="control">
+                <router-link to="/route/create" class="button is-mybluebg">Offer a ride</router-link>
+              </p>
             </div>
           </div>
           <div class="navbar-item">
@@ -32,19 +32,19 @@
             <div v-if="isAuthenticated === true" class="field is-grouped">
               <p class="is-size-6 navbar-item">Hello, {{ user.first_name }} {{ user.last_name }}</p>
 
-              <div class="dropdown is-right" :class="{'is-active':menuState }" @click="toggleMenu">
+              <div :class="{'is-active':menuState }" class="dropdown is-right" @click="toggleMenu">
                 <div class="dropdown-trigger">
                   <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                    
                     <span class="icon is-small">
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                      <i class="fa fa-angle-down" aria-hidden="true"/>
                     </span>
                   </button>
                 </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div id="dropdown-menu" class="dropdown-menu" role="menu">
                   <div class="dropdown-content">
                     <a href="#" class="dropdown-item" @click="dashboard">
-                     Dashboard                    </a>
+                      Dashboard                    </a>
                     <hr class="dropdown-divider">
                     <a href="#" class="dropdown-item" @click="_logout">
                       Logout
@@ -78,20 +78,20 @@ export default {
       menuState: false
     };
   },
-  computed:{
-    ...mapGetters(['user', 'isAuthenticated']),
+  computed: {
+    ...mapGetters(['user', 'isAuthenticated'])
   },
   methods: {
     ...mapActions(['logout']),
     _logout() {
-      this.logout().then(() => {  
+      this.logout().then(() => {
         this.$router.push('/login');
       });
     },
-    toggleMenu(){
+    toggleMenu() {
       this.menuState = !this.menuState;
-    }, 
-    dashboard(){
+    },
+    dashboard() {
       this.$router.push('/dashboard');
     }
   }

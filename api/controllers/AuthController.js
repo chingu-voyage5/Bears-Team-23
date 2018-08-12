@@ -7,6 +7,7 @@ const responseService = functions.response;
 class AuthController {
 
     signup(req, res) {
+        console.log(req.body,'jw')
         Users.findOne({
                 email: req.body.email
             })
@@ -38,6 +39,7 @@ class AuthController {
     };
 
     login(req, res) {
+
         Users.findOne({
                 email: req.body.email
             })
@@ -50,32 +52,22 @@ class AuthController {
                         email: user.email,
                         id: user._id
                     });
-                    user.tokens.push({
-                        access: 'auth',
-                        token: token
-                    });
-                    user = user.toObject();
+                    
+                    user = user.toJSON();
+                    user.token = token;
+
                     //Delete Password & Token  so its not returned in the object to the user
-                    delete user['password'];
+                    delete user.passwords;
                     //Bind token to a custom header
                     return responseService(200, 'success', res, 'User retrieved successfully', user);
                 }
+                
+                
             })
             .catch(e => {
                 return responseService(500, 'error', res, 'There was an error while trying to login', null, e);
             })
     };
-
-    delete(req, res) {
-        //Use UserID decoded from the JWT token in the header
-        Users.findByIdAndRemove(req.user.id)
-            .exec()
-            .then(user => {
-                return responseService(200, 'success', res, 'Acccount successfully deleted off platform');
-            }).catch(e => {
-                return responseService(500, 'error', res, 'There was an error while deleting account', e);
-            });
-    }
 
 
 }

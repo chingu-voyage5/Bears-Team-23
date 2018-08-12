@@ -76,6 +76,9 @@ const userSchema = new Schema({
     age:{
         type: String
     },
+    birthyear:{
+        type:String
+    },
     verifications:{
         type: Array,
         default: []

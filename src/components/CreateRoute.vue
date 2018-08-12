@@ -106,16 +106,16 @@
             <div id="map-canvas" />
           </div>
           <div class="box">
-              <label for="Extra Info">
-                  <p class="is-size-6">Extra Information / Comment</p>
-                </label>
-                <div class="control has-icons-left has-icons-right">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa fa-pen"/>
-                  </span>
-                  <textarea v-model="extra" class="textarea" cols="3" rows="3"></textarea>
-                </div>
+            <label for="Extra Info">
+              <p class="is-size-6">Extra Information / Comment</p>
+            </label>
+            <div class="control has-icons-left has-icons-right">
+              <span class="icon is-small is-left">
+                <i class="fa fa fa-pen"/>
+              </span>
+              <textarea v-model="extra" class="textarea" cols="3" rows="3"/>
             </div>
+          </div>
           
         </div>
       </div>
@@ -169,18 +169,13 @@ export default {
   methods: {
     async createRoute() {
       const routeBody = {
-        route_start_name:  this.route.from.name.trim(),
+        route_start_name: this.route.from.name.trim(),
         route_end_name: this.route.to.name.trim(),
         route_start: [
-         
           this.route.from.location.lat,
           this.route.from.location.lng
         ],
-        route_end: [
-          
-          this.route.to.location.lat,
-          this.route.to.location.lng
-        ],
+        route_end: [this.route.to.location.lat, this.route.to.location.lng],
         est_trip_length: this.durationCalc.text,
         est_trip_duration: this.distanceCalc.text,
         route_creator: this.user._id,
@@ -191,12 +186,11 @@ export default {
       };
 
       if (this.returntime && this.roundtrip) {
-
         const returnRouteBody = Object.assign({}, routeBody);
         let temp;
         let temp_name;
         temp = returnRouteBody.route_start;
-        temp_name = returnRouteBody.route_start_name
+        temp_name = returnRouteBody.route_start_name;
         returnRouteBody.route_start = returnRouteBody.route_end;
         returnRouteBody.route_start_name = returnRouteBody.route_end_name;
         returnRouteBody.route_end = temp;
@@ -209,7 +203,7 @@ export default {
             'http://localhost:5000/api/route',
             routeBody
           )).data;
-          
+
           returnRouteBody.init_route = originalTrip.data._id;
           const returnTrip = (await this.$axios.post(
             'http://localhost:5000/api/route',

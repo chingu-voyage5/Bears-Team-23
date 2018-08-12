@@ -18,10 +18,10 @@ const getters = {
     return state.auth ? state.auth : {};
   },
   isAuthenticated(state) {
-    return state.auth ? !!state.auth.tokens[0].token : '';
+    return state.auth ? !!state.auth.token : false;
   },
   token(state) {
-    return state.auth ? state.auth.tokens[0].token : '';
+    return state.auth ? state.auth.token : '';
   },
   search(state) {
     return state.searchResult ? state.searchResult : '';
@@ -52,17 +52,8 @@ const actions = {
       'http://localhost:5000/api/login',
       credentials
     );
-    const data = response.data.data;
-
-    const user = pick(data, [
-      'email',
-      'first_name',
-      'last_name',
-      'role',
-      'tokens',
-      '_id'
-    ]);
-    commit('set_auth', user);
+    const { data } = response.data;
+    commit('set_auth', data);
     return data;
   },
 
@@ -75,20 +66,13 @@ const actions = {
     });
   },
 
-  async signup(credentials) {
+  async signup({ commit }, credentials) {
+    
     const response = await axios.post(
       'http://localhost:5000/api/signup',
       credentials
     );
-    const data = response.data.data;
-
-    const user = pick(data, [
-      'email',
-      'first_name',
-      'last_name',
-      'role',
-      '_id'
-    ]);
+    const { data } = response.data;
     return user;
   },
 

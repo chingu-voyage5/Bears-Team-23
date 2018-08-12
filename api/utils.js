@@ -24,7 +24,7 @@ const requestAuthorization = (req, res, next) => {
 
     bearerToken = bearerHeader.split('.')[1]
 
-    JWT.verify(bearerHeader, secrets.JWT_SECRET, (err, verified) => {
+    JWT.verify(bearerToken, secrets.JWT_SECRET, (err, verified) => {
       if (err) {
           return res.sendStatus(403);
       }

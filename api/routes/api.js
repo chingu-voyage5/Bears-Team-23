@@ -13,6 +13,7 @@ module.exports = (express)=>{
     require('./auth')(api)
     require('./routes')(api)
     require('./trips')(api)
+    require('./user')(api)
 
     return api;
 }
