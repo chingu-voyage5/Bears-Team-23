@@ -16,18 +16,15 @@ import store from './store/store.js';
 
 Vue.use(Datetime);
 Vue.use(Moment);
-
 Vue.component('icon', Icon);
 Vue.use(Buefy);
 Vue.use(Toasted);
 
+const authenticated = localStorage.vuex ? !_.isNull(JSON.parse(localStorage.vuex).auth) : false ;
 
-if (localStorage.vuex) {
-  const token = JSON.parse(localStorage.getItem('vuex')).auth.tokens[0].token;
-
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = token;
-  }
+if (authenticated) {
+  const token = JSON.parse(localStorage.getItem('vuex')).auth.token;
+  axios.defaults.headers.common['Authorization'] = token;
 }
 
 // if (process.env.NODE_ENV === 'development') {

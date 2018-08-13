@@ -1,18 +1,35 @@
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Hind';
     font-weight: 600;
 }
 
-p{
+p {
     font-family: 'Open Sans'
 }
 
-.box{
+.box {
     border-radius: 0px !important;
-  }
+}
 
-  .is-myblue {
-    background-color: #108cce !important;
-    color: white;
-  }
-  
+.is-myblue {
+    
+}
+.vdatetime-input {
+    width: 100%;
+    margin-top: -1px;
+    padding: 13px 40px;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 18px;
+    padding-left: 3p
+}
+
+.autocomplete ul {
+    z-index: 100;
+}
+

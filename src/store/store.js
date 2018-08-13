@@ -67,13 +67,12 @@ const actions = {
   },
 
   async signup({ commit }, credentials) {
-    
     const response = await axios.post(
       'http://localhost:5000/api/signup',
       credentials
     );
     const { data } = response.data;
-    return user;
+    return data;
   },
 
   async searchTrip({ commit }, search) {

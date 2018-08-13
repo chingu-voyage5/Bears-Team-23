@@ -420,6 +420,10 @@ label p {
   font-weight: 600;
 }
 
+.autocomplete.autocomplete-list {
+  z-index: 100;
+}
+
 .autocomplete-change {
   width: 100% !important;
   height: 35px !important;

@@ -28,11 +28,11 @@
         </div>
         <div class="column is-three-quarters">
           <div class="summary">
-            <h5 class="is-size-5">{{ noOfTrips }} {{ ride }} available from <span class="is-myblue">{{ search[0].route_start_name }}</span> to <span class="is-myblue">{{ search[0].route_end_name }}</span></h5>
-            <p class="is-size-6">Duration: {{ search[0].est_trip_length }}</p>
+            <h5 class="is-size-5">{{ noOfTrips }} {{ ride }} available from <span class="is-myblue">{{ location.from.name }}</span> to <span class="is-myblue">{{ location.to.name }}</span></h5>
+            <p v-if="search.length" class="is-size-6">Duration: {{ search[0].est_trip_length }}</p>
           </div>
 
-          <div v-for="user in search" :key="user.id" class="columns">
+          <div v-if="search.length" v-for="user in search" :key="user.id" class="columns">
             <div class="column is-one-thirds">
               <div class="driver-info media">
                 <div class="media-left">
@@ -84,11 +84,13 @@ export default {
     return {
       value: 0,
       result: null,
+      location: null,
       noOfTrips: null,
       filter: '',
       ride: '',
       maleImg: male,
-      femaleImg: female
+      femaleImg: female,
+      
     };
   },
   computed: {
@@ -100,10 +102,12 @@ export default {
   methods: {
     ...mapMutations(['selected_search']),
     init() {
-      let ride = null;
       this.noOfTrips = this.search.length;
-      this.noOfTrips > 1 ? (ride = 'rides') : (ride = 'ride');
-      this.ride = ride;
+      this.ride = this.noOfTrips > 1 ? 'rides' : 'ride';
+      this.location = {
+        from: this.$store.state.searchParams.from,
+        to: this.$store.state.searchParams.to
+      }
     },
     openTrip(user) {
       const selectedIndex = this.search.findIndex(val => val.id === user.id);
