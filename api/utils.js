@@ -2,6 +2,7 @@ const randomID = require('random-id');
 const JWT = require('jsonwebtoken');
 const secrets = require('./dbconfig/secrets');
 const bcrypt = require('bcrypt-nodejs');
+const _ = require('lodash');
 const salt = bcrypt.genSaltSync(10);
 
 
@@ -14,7 +15,7 @@ const encryptPayload = (payload) => {
 }
 
 const requestAuthorization = (req, res, next) => {
-  
+
   let bearerHeader = req.headers['authorization'];
   
   if (!_.isUndefined(bearerHeader)) {

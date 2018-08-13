@@ -49,16 +49,18 @@
               <br>
               <tr>
                 <td class="pull-right">
-                  <p class="is-size-6 has-text-weight-bold" v-model="user.birthyear"> Birth Year</p>
+                  <p class="is-size-6 has-text-weight-bold">Date of birth</p>
                 </td>
                 <td>
-                  <div class="select">
-                    <select>
-                      <option>Select Date</option>
-                      <option>Option</option>
-                    </select>
-                  </div>
-                </td>
+                 <div class="field">
+                <p class="control has-icons-left">
+                  <datetime v-model="user.dob" type="date"/> 
+                  <span class="icon is-small is-left ">
+                    <i class="fa fa-calendar is-myblue"/>
+                  </span>
+                </p>
+              </div>
+                </td>     
               </tr>
               <tr>
                 <td class="pull-right">
@@ -98,9 +100,9 @@ export default {
   },
   methods:{
       save(){
-          this.$axios.put(`http://localhost:5000/api/user`).then(resp => {
-              const {data} = resp.data.response;
-              this.user = Object.assign({}, data);
+          this.$axios.put(`http://localhost:5000/api/user`, this.user).then(resp => {
+              const { data } = resp.data
+              this.$store.commit('set_auth', data)
               this.$toasted.success('Personal Details have successfully been saved');
           })
           .catch(e => {

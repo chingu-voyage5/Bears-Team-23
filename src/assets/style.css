@@ -19,14 +19,13 @@ p {
 .is-myblue {
     
 }
-.vdatetime-input {
+.vdatetime-input{
     width: 100%;
     margin-top: -1px;
-    padding: 13px 40px;
+    padding: 8px 40px;
     border-radius: 5px;
-    border-style: none;
-    font-size: 18px;
-    padding-left: 3p
+    font-size: 14px;
+    border: 1px #dbdbdb solid;
 }
 
 .autocomplete ul {

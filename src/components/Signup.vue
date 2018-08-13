@@ -10,30 +10,39 @@
           <hr>
           <div class="field">
             <div class="control">
-              <input v-model="firstname" type="text" class="input" placeholder="First Name">
+              <input v-model="credentials.first_name" type="text" class="input" placeholder="First Name">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input v-model="lastname" type="text" class="input" placeholder="Last Name">
+              <input v-model="credentials.last_name" type="text" class="input" placeholder="Last Name">
             </div>
           </div>
+
           <div class="field">
             <div class="control">
-              <select v-model="role" class="input">
-                <option disabled selected value >Select Role</option>
-                <option v-for="role in ['passenger', 'driver']" :value="role" :key="role">{{ role }}</option>
+              <select v-model="gender" class="input">
+                <option disabled selected value >Gender</option>
+                <option v-for="(gender, index) in ['Male', 'Female']" :value="gender" :key="index">{{ role }}</option>
               </select>
             </div>
           </div>
           <div class="field">
+                <p class="control has-icons-left">
+                  <datetime v-model="credentials.dob" class="is-medium" type="date"/> 
+                  <span class="icon is-small is-left ">
+                    <i class="fa fa-calendar is-myblue"/>
+                  </span>
+                </p>
+              </div>     
+          <div class="field">
             <div class="control">
-              <input v-model="email" class="input" type="email" placeholder="email">
+              <input v-model="credentials.email" class="input" type="email" placeholder="email">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input v-model="password" class="input" type="password" placeholder="password">
+              <input v-model="credentials.password" class="input" type="password" placeholder="password">
             </div>
           </div>
           <a class="button is-mybluebg" @click="signingUp">Sign Up</a>
@@ -56,30 +65,15 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: '',
-      firstname: '',
-      lastname: '',
-      role: ''
-    };
+     credentials: {}
+    }
   },
-  computed: {
-   
-  },
-  mounted() {},
   methods: {
     ...mapActions(['signup']),
     async signingUp() {
-      const credentials = {
-        email: this.email,
-        password: this.password,
-        firstname: this.firstname,
-        lastname: this.lastname,
-        role: this.role
-      };
 
       try {
-        const response = await this.signup(credentials);
+        const response = await this.signup(this.credentials);
         if (response) {
           this.$toasted.success('Successfully signed up').goAway(5000);
           this.$router.push('/login');

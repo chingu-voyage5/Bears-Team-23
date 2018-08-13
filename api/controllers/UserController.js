@@ -25,12 +25,11 @@ class UserController {
     }
     
     update(req, res){
-        Users.update({ _id:req.user.id}, req.body)
-        .exec()
+        Users.findByIdAndUpdate(req.user.id, req.body, { new: true })
         .then(user => {
-            console.log(user,'user')
-                return responseService(200, 'success', res, 'Successfully updated user', updatedUser);
-        }).catch(e=>{
+                return responseService(200, 'success', res, 'Successfully updated user',user)
+        })
+        .catch(e => {
             return responseService(500, 'error', res, 'There was an error while updating user', e);
         })
     }

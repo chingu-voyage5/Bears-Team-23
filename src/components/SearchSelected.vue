@@ -88,7 +88,7 @@
                           co-travellers on this ride
                         </p>
                                 
-                        <span v-for="pass in selected.passengers">
+                        <span v-for="pass in selected.passengers" :key="pass.id">
                           <i v-if="pass" class="fa fa-user icon"/>
                           <i v-else class="fa fa-circle icon"/>
                         </span>
@@ -115,7 +115,6 @@
                         <div class="select is-fullwidth">
                           <select>
                             <option v-for="n in selected.passenger_space" value="n">{{ n }} seats</option>
-                                                
                           </select>
                         </div>
                       </div>
@@ -215,6 +214,9 @@ export default {
   mounted() {
     this.selected = this.search[this.$store.state.selectedIndex];
     this.selected.passenger_space = Number(this.selected.passenger_space);
+  },
+  methods:{
+   
   }
 };
 </script>

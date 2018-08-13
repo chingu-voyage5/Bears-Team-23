@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 const state = {
   auth: null,
+  token: null,
   searchResult: null,
   searchParams: null,
   selectedIndex: null
@@ -18,10 +19,10 @@ const getters = {
     return state.auth ? state.auth : {};
   },
   isAuthenticated(state) {
-    return state.auth ? !!state.auth.token : false;
+    return state.token ? !!state.token : false;
   },
   token(state) {
-    return state.auth ? state.auth.token : '';
+    return state.token ? state.token : '';
   },
   search(state) {
     return state.searchResult ? state.searchResult : '';
@@ -34,6 +35,9 @@ const getters = {
 const mutations = {
   set_auth(state, authData) {
     state.auth = authData;
+  },
+  set_token(state, tokenData) {
+    state.token = tokenData;
   },
   set_search_params(state, payload) {
     state.searchParams = payload;
@@ -53,6 +57,8 @@ const actions = {
       credentials
     );
     const { data } = response.data;
+    commit('set_token', data.token);
+    delete data.token;
     commit('set_auth', data);
     return data;
   },
@@ -60,6 +66,7 @@ const actions = {
   async logout({ commit }) {
     return new Promise(resolve => {
       commit('set_auth', null);
+      commit('set_token', null);
       localStorage.removeItem('vuex');
       delete axios.defaults.headers.common['Authorization'];
       resolve();

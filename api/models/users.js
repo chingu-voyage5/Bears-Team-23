@@ -12,16 +12,17 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone:{
+        type: String, 
+    },
+    bio: {
+        type: String
+    },
     email: {
         type: String,
         required: true,
         unique: true,
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    },
-    role: {
-        type: String,
-        required: true,
-        enum: ['driver', 'passenger']
     },
     car_brand: {
         type: String,
@@ -52,16 +53,6 @@ const userSchema = new Schema({
         required: true,
         minlength: 6
     },
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        },
-        token: {
-            type: String,
-            required: true
-        }
-    }],
     isDeleted: {
         type: Boolean,
         default: false
@@ -73,11 +64,9 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    age:{
-        type: String
-    },
-    birthyear:{
-        type:String
+    dob:{
+        type: String,
+        required: true
     },
     verifications:{
         type: Array,
