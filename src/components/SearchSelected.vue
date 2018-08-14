@@ -48,7 +48,7 @@
                       <div class="media-content">
                         <div class="content">
                           <p>
-                            <strong>{{ user.first_name }} {{ user.last_name }}</strong> <small/><small/>
+                            <strong>{{ routeCreator.first_name }} {{ routeCreator.last_name }}</strong> <small/><small/>
                             <br>
                             {{ selected.extra }}
                           </p>
@@ -114,7 +114,7 @@
                         <label class="label">Book seats</label>
                         <div class="select is-fullwidth">
                           <select>
-                            <option v-for="n in selected.passenger_space" value="n">{{ n }} seats</option>
+                            <option v-for="(n, index) in selected.passenger_space" :value="n" :key="index">{{ n }} seats</option>
                           </select>
                         </div>
                       </div>
@@ -191,7 +191,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['search', 'user']),
+    ...mapGetters(['search', 'user', 'searchResult']),
     lateAlready() {
       if (
         this.$moment(this.selected.trip_start).isSame(
@@ -209,6 +209,9 @@ export default {
       ) {
         return true;
       } else return false;
+    },
+    routeCreator(){
+      return this.selected.route_creator;
     }
   },
   mounted() {
@@ -216,7 +219,12 @@ export default {
     this.selected.passenger_space = Number(this.selected.passenger_space);
   },
   methods:{
-   
+    bookTrip(){
+      this.post('http://localhost:5000/api/trip').then(resp => {
+        console.log(resp,'response');
+      })
+      .catch(e => {console.log(e,'error')})
+    }
   }
 };
 </script>

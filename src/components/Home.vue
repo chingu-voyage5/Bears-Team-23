@@ -90,8 +90,16 @@ export default {
       };
     },
     async findRide() {
-      this.searchTrip(this.journey);
-      this.$router.push('/search');
+      try {
+        await this.searchTrip(this.journey);
+      }
+      catch(err){
+        console.log(err, 'Error while retrieving search');
+      }
+      finally {
+        this.$router.push('/search');
+      }
+      
     }
   }
 };

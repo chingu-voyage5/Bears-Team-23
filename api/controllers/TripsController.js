@@ -41,6 +41,7 @@ class TripsController {
                 return responseService(500, 'error', res, 'An Error occured', null, e);
             })
     }
+
 }
 
 module.exports = new TripsController;

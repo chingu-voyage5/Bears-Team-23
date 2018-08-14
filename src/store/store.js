@@ -83,9 +83,13 @@ const actions = {
   },
 
   async searchTrip({ commit }, search) {
-    const rideResults = (await axios.get('http://localhost:5000/api/find', {
+    console.log(search,'yes')
+    const options = {
       params: search
-    })).data.data;
+    }
+    if(this.getters.isAuthenticated) options.params.loggedUser = this.getters.user._id;
+
+    const rideResults = (await axios.get('http://localhost:5000/api/find', options)).data.data;
     commit('set_search_params', search);
     commit('set_search', rideResults);
   }
