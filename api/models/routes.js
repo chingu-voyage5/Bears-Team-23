@@ -49,9 +49,9 @@ const routeSchema = new Schema({
         type: String,
         required: true
     },
-    trip_rating:{
+    seats_available:{
         type: String,
-        enum: [1,2,3,4,5]
+        required:true
     },
     trip_start:{
         type: Date,
@@ -59,7 +59,7 @@ const routeSchema = new Schema({
     },
     trip_status:{
         type: String, 
-        enum: ['created','started','ended'],
+        enum: ['created','ended'],
         default:'created'
     },
     passengers:[{

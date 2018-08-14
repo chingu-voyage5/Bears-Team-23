@@ -6,33 +6,29 @@ const tripsSchema = new Schema({
   
     route: {
         type: Schema.Types.ObjectId, 
-        ref: 'Route'
-    },
-    trip_creator:{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    trip_passengers: {
-        type: Array, 
-        default: []
-    }, 
-    trip_start_time: {
-        type: Date, 
+        ref: 'Route',
         required: true
     },
-    trip_return_time: {
-        type: Date
+    route_creator:{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    trip_days:{
-        type: Array,
-        default: []
+    passenger: {
+        type:Schema.Types.ObjectId,
+        ref:'User',
+        required: true
+    }, 
+    seats:{
+        type: String,
+        required: true
     },
     trip_rating: {
         type: String, 
     },
     trip_status:{
         type: String, 
-        enum: ['created','started','ended'],
+        enum: ['created','ended'],
         default:'created'
     },
     isDeleted: {

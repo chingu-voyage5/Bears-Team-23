@@ -76,7 +76,7 @@
                     </div>
                     <div class="level-item has-text-centered">
                       <div>
-                        <p class="title">{{ selected.passenger_space }}</p>
+                        <p class="title">{{ selected.seats_available }}</p>
                         <p class="heading">available seats</p>
                       </div>
                     </div>
@@ -88,7 +88,7 @@
                           co-travellers on this ride
                         </p>
                                 
-                        <span v-for="pass in selected.passengers" :key="pass.id">
+                        <span v-for="(pass, index) in Number(selected.passenger_space - selected.seats_available)" :key="index">
                           <i v-if="pass" class="fa fa-user icon"/>
                           <i v-else class="fa fa-circle icon"/>
                         </span>
@@ -108,13 +108,26 @@
                       </div>
                     </div>
                   </div>
+                  <div v-if="noSeats" class="level">
+                    <div class="level-item has-text-centered">
+                      <div>
+                        <p class="heading">
+                          No Seats Available
+                          <br>
+                          <router-link to="/">Search for another ride </router-link>
+                        </p>
+                                
+                      </div>
+                    </div>
+                  </div>
                   <div v-else>
                     <div class="field">
                       <div class="control">
                         <label class="label">Book seats</label>
                         <div class="select is-fullwidth">
-                          <select>
-                            <option v-for="(n, index) in selected.passenger_space" :value="n" :key="index">{{ n }} seats</option>
+                          <select v-model="seats">
+                            <option disabled selected>Select No of Seats</option>
+                            <option v-for="(n, index) in Number(selected.seats_available)" :value="n" :key="index">{{ n }} seats</option>
                           </select>
                         </div>
                       </div>
@@ -131,7 +144,7 @@
 
                     <div class="field">
                       <div class="control">
-                        <a class="button is-danger is-fullwidth">Request to book</a>
+                        <a class="button is-danger is-fullwidth" @click="bookTrip">Request to book</a>
                       </div>
                     </div>
                       
@@ -187,7 +200,8 @@ export default {
     return {
       selected: null,
       maleImg: male,
-      terms: false
+      terms: false,
+      seats:null,
     };
   },
   computed: {
@@ -212,6 +226,9 @@ export default {
     },
     routeCreator(){
       return this.selected.route_creator;
+    },
+    noSeats(){
+      return this.selected.seats_available < 1 ? true : false;
     }
   },
   mounted() {
@@ -220,10 +237,14 @@ export default {
   },
   methods:{
     bookTrip(){
-      this.post('http://localhost:5000/api/trip').then(resp => {
-        console.log(resp,'response');
-      })
-      .catch(e => {console.log(e,'error')})
+      const pickedBody = this._.pick(this.selected, ['_id','route_creator'])
+      pickedBody.noOfSeats = this.seats;
+      
+      this.$axios.post('http://localhost:5000/api/trip', pickedBody)
+        .then(resp => {
+          this.$toasted.success(resp.data.message).goAway(3000)
+        })
+        .catch(e => this.$toasted.error(e.error.message).goAway(3000))
     }
   }
 };

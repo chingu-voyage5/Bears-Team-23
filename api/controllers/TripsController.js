@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Promise = require('bluebird');
+const promise = require('bluebird');
 const Trips = require('../models/trips');
 const Routes = require('../models/routes');
 const functions = require('../utils');
@@ -7,22 +7,26 @@ const responseService = functions.response;
 
 class TripsController {
    create(req, res) {
-        const trip = new Trips(req.body);
-        trip
-            .save()
-            .then(trip => {
-                Routes.findByIdAndUpdate(req.body.route, {
-                    $push:{
-                        'trips': trip._id
-                    }
-                }).exec().then(()=>{
-                    responseService(200, 'success', res, 'Trip Was successfully created', trip);
+        const trip = {
+            route: req.body._id,
+            route_creator: req.body.route_creator._id,
+            passenger: req.user.id,
+            seats: req.body.noOfSeats
+        }
+        Routes.findById(trip.route).then(route => {
+            
+            if(!route.isDeleted && route.seats_available >= trip.seats){
+                const newTrip = Trips.create(trip);
+                  newTrip.then(() => {
+                    route.seats_available -= trip.seats;
+                    route.save().then(() => {;
+                        return responseService(200,'success', res, 'Trip has been booked successfully');
+                    })
                 })
-                
-            })
-            .catch(err => {
-                responseService(500, 'error', res, 'Error occured while creating trip', null, err);
-            })
+            }
+            else return responseService(500,'error',res, 'Seats No Longer Available');
+        })
+        .catch(e => { return responseService(500,'error',res, 'Invalid route for trip', e) })
     };
 
     list(req, res) {

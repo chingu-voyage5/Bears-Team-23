@@ -13,6 +13,8 @@ import 'buefy/lib/buefy.css';
 import App from './App';
 import router from './router';
 import store from './store/store.js';
+import '@/filter.js'
+import _ from 'lodash';
 
 Vue.use(Datetime);
 Vue.use(Moment);
@@ -32,6 +34,7 @@ if (authenticated) {
 //  } else axios.defaults.baseURL = process.env.BASEURL_PROD;
 
 Vue.prototype.$axios = axios;
+Vue.prototype._ = _;
 
 Vue.config.productionTip = false;
 
