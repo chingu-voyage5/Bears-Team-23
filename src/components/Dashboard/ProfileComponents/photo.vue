@@ -126,7 +126,6 @@ export default {
     saveImage(){
     this.$axios.post('http://localhost:5000/api/user/upload', { img:this.init_img }).then(resp => {
         const image = resp.data.data;
-        console.log(image,'lol')
         this.$store.commit('set_image', image);
         this.successful = this.user.image ? true : false;
         this.$toasted.success('Image Upload Successful').goAway(3000);

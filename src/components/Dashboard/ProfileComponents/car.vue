@@ -1,150 +1,142 @@
 <template>
   <div>
-    <div>
-      <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
+     <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
       <hr>
       <p class="pull-left">
-      <i class="fa fa-arrow-left"/> Back</p>
-      <div v-if="firstStep">
-        <div class="columns is-centered">
-          <div class="column is-one-quarters"/>
-          <div class="column is-half">
-            <div class="main">
-              <p class="is-size-5 has-text-weight-bold">Whats your number plate?</p>
-              <p class="is-size-6 has-text-weight-bold">We'll only share it with passengers that book with you.</p>
-              <br>
-              <div class="control has-icons-left">
-                <div class="select is-medium">
-                  <select>
-                    <option selected>Country</option>
-                    <option>Select dropdown</option>
-                    <option>With options</option>
-                  </select>
-                </div>
-                <span class="icon is-medium is-left">
+        <i class="fa fa-arrow-left" /> Back</p>
+    <div v-if="!carDetailsAvailable">
+     
+      <div>
+        <div v-if="firstStep">
+          <div class="columns is-centered">
+            <div class="column is-one-quarters" />
+            <div class="column is-half">
+              <div class="main">
+                <p class="is-size-5 has-text-weight-bold">Whats your number plate?</p>
+                <p class="is-size-6 has-text-weight-bold">We'll only share it with passengers that book with you.</p>
+                <br>
+                <!-- <div class="control has-icons-right">
+                <span class="icon is-medium is-r">
                   <i class="fa fa-globe"/>
                 </span>
-              </div>
+              </div> -->
 
-              <div class="field">
-                <div class="control">
-                  <input type="text" class="input" placeholder="Number plate">
+                <div class="field">
+                  <div class="control">
+                    <input type="text" class="input" placeholder="Number plate" v-model="car.license">
+                  </div>
                 </div>
-              </div>
 
-              <div class="field">
-                <div class="control">
-                  <button class="button is-myblue">Continue</button>
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-myblue" @click="step+=1">Continue</button>
+                  </div>
                 </div>
-              </div>
 
-              <div class="field">
-                <div class="control">
-                  <button class="button">No Thanks</button>
-                </div>
               </div>
             </div>
+            <div class="column is-one-quarters" />
           </div>
-          <div class="column is-one-quarters"/>
         </div>
-      </div>
-      <div v-if="secondStep">
-        <div class="columns is-centered">
-          <div class="column is-one-quarters"/>
-          <div class="column is-half">
-            <p class="is-size-5 has-text-weight-bold">What make is your car?</p>
-            <div class="search">
+        <div v-if="secondStep">
+          <div class="columns is-centered">
+            <div class="column is-one-quarters" />
+            <div class="column is-half">
+              <p class="is-size-5 has-text-weight-bold">What make is your car?</p>
+              <div class="search">
+                <div class="control has-icons-left">
+                  <input class="input is-large" type="text" placeholder="Search" v-model="car.make" @keyup.enter="carMake()">
+                  <span class="icon is-medium is-left">
+                    <i class="fa fa-search" />
+                  </span>
+                </div>
+              </div>
+              <p class="is-size-5 has-text-weight-bold">Popular makes</p>
+              <hr>
+              <div class="car-brands">
+                <ul>
+                  <li>
+                    <p class="is-size-6 has-text-weight-bold">FORD
+                      <i class="fa fa-chevron-right pull-right" />
+                    </p>
+                  </li>
+                  <li>
+                    <p class="is-size-6 has-text-weight-bold">HYUNDAI
+                      <i class="fa fa-chevron-right pull-right" />
+                    </p>
+                  </li>
+                  <li>
+                    <p class="is-size-6 has-text-weight-bold">TOYOTA
+                      <i class="fa fa-chevron-right pull-right" />
+                    </p>
+                  </li>
+                  <li>
+                    <p class="is-size-6 has-text-weight-bold">KIA
+                      <i class="fa fa-chevron-right pull-right" />
+                    </p>
+                  </li>
+                  <li>
+                    <p class="is-size-6 has-text-weight-bold">MERCEDES
+                      <i class="fa fa-chevron-right pull-right" />
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="column is-one-quarters" />
+          </div>
+        </div>
+
+        <div v-if="thirdStep">
+          <div class="columns is-centered">
+            <div class="column is-one-quarters" />
+            <div class="column is-half">
+              <p class="is-size-5 has-text-weight-bold">What year was it registered? </p>
+              <p class="is-size-6 has-text-weight-bold">Passengers like to know if your car is modern or something a bit more vintage.</p>
+              <hr>
+              <input type="number" class="input" placeholder="Enter year (YYYY)" v-model="car.year">
+              <button class="button" @click="carFind()">Submit</button>
+            </div>
+            <div class="column is-one-quarters" />
+          </div>
+        </div>
+
+        <div v-if="fourthStep">
+          <div class="columns is-centered">
+            <div class="column is-one-quarters" />
+            <div class="column is-half">
+              <p class="is-size-5 has-text-weight-bold">What model?</p>
+              <!-- <div class="search">
               <div class="control has-icons-left">
-                <input class="input is-large" type="text" placeholder="Search">
+                <input class="input is-large" type="text" placeholder="Search" v-model="car.model">
                 <span class="icon is-medium is-left">
                   <i class="fa fa-search"/>
                 </span>
               </div>
+            </div> -->
+              <span v-if="carsRetrieved.length">
+                <p class="is-size-5 has-text-weight-bold">Car Models</p>
+                <hr>
+                <div class="car-brands">
+                  <ul>
+                    <li v-for="car in carsRetrieved" :key="car.id" @click="selectCar(car)">
+                      <div class="box">
+                        <p class="is-size-6 has-text-weight-bold">{{car.year}} {{car.make}} {{car.model}}
+                          <i class="fa fa-chevron-right pull-right" />
+                        </p>
+                      </div>
+
+                    </li>
+                  </ul>
+                </div>
+              </span>
             </div>
-            <p class="is-size-5 has-text-weight-bold">Popular makes</p>
-            <hr>
-            <div class="car-brands">
-              <ul>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">MARUTI
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">HONDA
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">KIA
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">TOYOTA
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">HYUNDAI
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-              </ul>
-            </div>
+            <div class="column is-one-quarters" />
           </div>
-          <div class="column is-one-quarters"/>
         </div>
-      </div>
-      <div v-if="thirdStep">
-        <div class="columns is-centered">
-          <div class="column is-one-quarters"/>
-          <div class="column is-half">
-            <p class="is-size-5 has-text-weight-bold">What model?</p>
-            <div class="search">
-              <div class="control has-icons-left">
-                <input class="input is-large" type="text" placeholder="Search">
-                <span class="icon is-medium is-left">
-                  <i class="fa fa-search"/>
-                </span>
-              </div>
-            </div>
-            <p class="is-size-5 has-text-weight-bold">Popular models</p>
-            <hr>
-            <div class="car-brands">
-              <ul>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">SOLARIS
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">ACCENT
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">GETZ
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">i20
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-                <li>
-                  <p class="is-size-6 has-text-weight-bold">i30
-                    <i class="fa fa-chevron-right pull-right"/>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="column is-one-quarters"/>
-        </div>
-      </div>
-      <div v-if="fourthStep">
+
+
+        <!-- <div v-if="fourthStep">
         <div class="columns is-centered">
           <div class="column is-one-quarters"/>
           <div class="column is-half">
@@ -198,98 +190,101 @@
           </div>
           <div class="column is-one-quarters"/>
         </div>
-      </div>
+      </div> -->
 
-      <div v-if="fifthStep">
-        <div class="columns is-centered">
-          <div class="column is-one-quarters"/>
-          <div class="column is-half">
-            <p class="is-size-5 has-text-weight-bold">What Color is it? </p>
-            <hr>
-            <div class="car-brands">
-              <ul>
-                <li>
-                  <div class="control">
+        <div v-if="fifthStep">
+          <div class="columns is-centered">
+            <div class="column is-one-quarters" />
+            <div class="column is-half">
+              <p class="is-size-5 has-text-weight-bold">What Color is it? </p>
+              <hr>
+              <div>
+                <div class="search">
+                  <div class="control has-icons-left">
+                    <input class="input is-large" type="text" placeholder="Other Color" v-model="car.color">
+                    <span class="icon is-medium is-left">
+                      <i class="fa fa-search" />
+                    </span>
+                  </div>
+                  <div class="car-brands">
+                    <ul>
+                      <li>
+                        <div class="control">
 
-                    <label class="radio">
-                      <span class="is-size-6 has-text-weight-bold">Black</span>
-                      <input type="radio" class="radio" name="answer">
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="control">
-                    <label class="radio">
-                      <span class="is-size-6 has-text-weight-bold">White</span>
-                      <input type="radio" class="radio" name="answer">
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="control">
-                    <label class="radio">
-                      <span class="is-size-6 has-text-weight-bold">Grey</span>
-                      <input type="radio" class="radio" name="answer">
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="control">
-                    <label class="radio">
-                      <span class="is-size-6 has-text-weight-bold">Burgundy</span>
-                      <input type="radio" class="radio" name="answer">
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="control">
-                    <label class="radio">
-                      <span class="is-size-6 has-text-weight-bold">Dark blue</span>
-                      <input type="radio" class="radio" name="answer">
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="column is-one-quarters"/>
-        </div>
-      </div>
+                          <label class="0">
+                            <span class="is-size-6 has-text-weight-bold">Black</span>
+                            <input type="radio" id="0" class="radio" value="black" v-model="car.color">
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="control">
+                          <label class="1">
+                            <span class="is-size-6 has-text-weight-bold">White</span>
+                            <input type="radio" id="1" class="radio" value="white" v-model="car.color">
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="control">
+                          <label class="2">
+                            <span class="is-size-6 has-text-weight-bold">Red</span>
+                            <input type="radio" id="2" class="radio" value="red" v-model="car.color">
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="control">
+                          <label class="3">
+                            <span class="is-size-6 has-text-weight-bold">Grey</span>
+                            <input type="radio" id="3" class="radio" value="grey" v-model="car.color">
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="control">
+                          <label class="4">
+                            <span class="is-size-6 has-text-weight-bold">Blue</span>
+                            <input type="radio" id="4" class="radio" name="answer">
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
 
-      <div v-if="sixthStep">
-        <div class="columns is-centered">
-          <div class="column is-one-quarters"/>
-          <div class="column is-half">
-            <p class="is-size-5 has-text-weight-bold">What year was it registered? </p>
-            <p class="is-size-6 has-text-weight-bold">Passengers like to know if your car is modern or something a bit more vintage.</p>
-            <hr>
-            <input type="text" class="input" placeholder="Enter year (YYYY)">
-            <button class="button">Submit</button>
-          </div>
-          <div class="column is-one-quarters"/>
-        </div>
-      </div>
-
-      <div v-if="finalStep">
-        <br>
-        <br>
-        <div class="box">
-          <div class="columns">
-            <div class="column is-one-fifth has-text-centered">
-              <img :src="hatchback" class="image is-48x48" alt="">
-              <br>
-              <a href="" class="  is-size-6 has-text-weight-bold">Upload photo</a>
-              <button class="button is-myblue">Add a car</button>
-            </div>
-            <div class="column is-four-fifths">
-              <div class="pull-left">
-                <p class="is-size-6 has-text-weight-bold">HYUNDAI ACCENT</p>
-                <i class="fa fa-edit"/>
-                <i class="fa fa-times"/>
+                  </div>
+                  <button class="button" @click="addCar()">Submit</button>
+                </div>
               </div>
             </div>
+            <div class="column is-one-quarters" />
           </div>
+        </div>
+      </div>
 
+
+    </div>
+    <div v-else>
+      <br>
+      <br>
+      <div class="box">
+        <div class="columns">
+          <div class="column is-one-fifth has-text-centered">
+            <div class="car">
+               <img :src="hatchback" class="image is-48x48" alt="">
+            </div>
+           
+            <br>
+            <a href="" class="  is-size-6 has-text-weight-bold">Upload photo</a>
+            <br>
+            <a class="button is-myblue" @click="changeDetails()">Change Car Details</a>
+          </div>
+          <div class="column is-four-fifths">
+            <div class="pull-left">
+              <p class="is-size-4 has-text-weight-bold">{{user.car.year}} {{user.car.make}} {{user.car.model}}</p>
+              <p class="is-size-6 has-text-weight-bold">{{user.car.license.toUpperCase()}}</p>
+              <p class="is-size-6 has-text-weight-bold">{{user.car.color.toUpperCase()}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -297,69 +292,141 @@
 </template>
 
 <script>
-import sedan from '@/assets/img/car-sedan.png';
-import suv from '@/assets/img/car-suv.png';
-import estate from '@/assets/img/car-estate.png';
-import convertible from '@/assets/img/car-convertible.png';
-import hatchback from '@/assets/img/car-hatchback.png';
+  import sedan from '@/assets/img/car-sedan.png';
+  import suv from '@/assets/img/car-suv.png';
+  import estate from '@/assets/img/car-estate.png';
+  import convertible from '@/assets/img/car-convertible.png';
+  import hatchback from '@/assets/img/car-hatchback.png';
+  import {
+    mapGetters
+  } from 'vuex';
 
-export default {
-  name: 'CarProfile',
-  data() {
-    return {
-      step: 7,
-      sedan,
-      suv,
-      estate,
-      convertible,
-      hatchback
-    };
-  },
-  computed: {
-    firstStep() {
-      return this.step === 1;
+
+  export default {
+    name: 'CarProfile',
+    data() {
+      return {
+        step: 1,
+        sedan,
+        suv,
+        estate,
+        convertible,
+        hatchback,
+        car: {},
+        loading: false,
+        carsRetrieved: null
+      };
     },
-    secondStep() {
-      return this.step === 2;
+    computed: {
+      ...mapGetters(['user']),
+      firstStep() {
+        return this.step === 1;
+      },
+      secondStep() {
+        return this.step === 2;
+      },
+      thirdStep() {
+        return this.step === 3;
+      },
+      fourthStep() {
+        return this.step === 4;
+      },
+      fifthStep() {
+        return this.step === 5;
+      },
+      sixthStep() {
+        return this.step === 6;
+      },
+      finalStep() {
+        return this.step === 7;
+      },
+      carDetailsAvailable() {
+        return this.user.car ? true : false;
+      }
     },
-    thirdStep() {
-      return this.step === 3;
-    },
-    fourthStep() {
-      return this.step === 4;
-    },
-    fifthStep() {
-      return this.step === 5;
-    },
-    sixthStep() {
-      return this.step === 6;
-    },
-    finalStep() {
-      return this.step === 7;
+    methods: {
+      carFind() {
+        this.loading = true;
+        if (!_.isUndefined(this.car.make) &&
+          !_.isNull(this.car.make) &&
+          this.car.make.trim() !== '') {
+          this.$axios.get('http://localhost:5000/api/cars', {
+              params: this.car
+            }).then(resp => {
+              const {
+                data
+              } = resp.data;
+              this.carsRetrieved = data;
+              this.loading = false;
+              this.step += 1
+            })
+            .catch(err => {
+              this.$toasted.error('Error while retrieving car details').goAway(3000);
+            })
+        }
+      },
+      carMake() {
+        if (!_.isUndefined(this.car.make) &&
+          !_.isNull(this.car.make) &&
+          this.car.make.trim() !== '') {
+          this.step += 1;
+        }
+      },
+      selectCar(car) {
+        this.car = Object.assign(this.car, car);
+        this.step += 1;
+      },
+      addCar() {
+        this.$axios.put('http://localhost:5000/api/user', {
+            car: this.car
+          }).then(resp => {
+            const {
+              car
+            } = resp.data.data;
+            this.$store.commit('set_car', car);
+            this.$toasted.success('Car details added successfully').goAway(3000);
+          })
+          .catch(err => {
+            this.$toasted.error('Error occured while updating car details').goAway(3000);
+          })
+      },
+      changeDetails() {
+        this.car = this.user.car;
+        this.carDetailsAvailable = false;
+      }
     }
-  }
-};
+  };
 </script>
 <style scoped>
-.table td {
-  border: none !important;
-}
-.box,
-.table {
-  background-color: #eeeeee;
-}
-.columns.is-centered {
-  margin: 50px 0;
-}
-input[type='text'],
-button {
-  width: 100%;
-  margin: 5px 0;
-}
-.search {
-  margin: 30px 0;
-}
-ul > li {
-  margin: 30px 0;
+  .table td {
+    border: none !important;
+  }
+
+  .box,
+  .table {
+    background-color: #eeeeee;
+  }
+
+  .columns.is-centered {
+    margin: 50px 0;
+  }
+
+  input[type='text'],
+  button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .search {
+    margin: 30px 0;
+  }
+
+  ul>li {
+    margin: 30px 0;
+  }
+
+.car img {
+    display:block;
+    margin:auto;
 }
 </style>

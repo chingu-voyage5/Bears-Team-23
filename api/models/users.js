@@ -18,28 +18,20 @@ const userSchema = new Schema({
     bio: {
         type: String
     },
+    pref: {
+        type: Schema.Types.Mixed,
+        default: {}
+    },
     email: {
         type: String,
         required: true,
         unique: true,
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
-    car_brand: {
-        type: String,
-    },
-    car_model: {
-        type: String,
-    },
-    car_available_seats: {
-        type: String
-    },
-    car_license_plate: {
-        type: String
+    car: {
+        type: Schema.Types.Mixed
     },
     driver_license: {
-        type: String
-    },
-    car_reg_number: {
         type: String
     },
     rating: {
@@ -74,7 +66,8 @@ const userSchema = new Schema({
     }
 
 }, {
-    timestamps: true
+    timestamps: true, 
+    minimize: false
 })
 
 userSchema.plugin(uniqueValidator);

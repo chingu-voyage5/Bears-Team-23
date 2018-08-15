@@ -41,6 +41,12 @@ const mutations = {
   set_token(state, tokenData) {
     state.token = tokenData;
   },
+  set_pref(state, preference) {
+    state.auth.pref = preference;
+  },
+  set_car(state, car){
+    state.auth.car = car;
+  },
   set_search_params(state, payload) {
     state.searchParams = payload;
   },

@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 const Users = require('../models/users');
+const Cars = require('../models/cars');
 const functions = require('../utils');
 const responseService = functions.response;
 
 class UserController {
-
     list(req, res){ 
         Users.find().populateAll().then(user=>{
             return responseService(200, 'success', res, 'Users retrieved successfully', user);
@@ -25,6 +25,7 @@ class UserController {
     }
     
     update(req, res){
+        console.log(req.body)
         Users.findByIdAndUpdate(req.user.id, req.body, { new: true })
         .then(user => {
                 return responseService(200, 'success', res, 'Successfully updated user',user)
@@ -58,8 +59,20 @@ class UserController {
                 return responseService(500, 'error', res, 'There was an error while deleting account', e);
             });
     };
-    
 
+    //Needs to be refactored to its own utility controller 
+
+    getCars(req, res){
+        Cars.find({
+            'year': { "$regex": req.query.year, "$options": "i" },
+            'make': { "$regex": req.query.make, "$options": "i" }
+        }).then(cars => {
+            return responseService(200, 'success', res, 'Acccount successfully deleted off platform', cars);
+        })
+        .catch(err => {
+            return responseService(500, 'success', res, 'Error occured while getting cars', err);
+        })
+    }
 
 
 }
