@@ -11,7 +11,7 @@ module.exports = (express)=>{
     const api = express.Router();
 
     require('./auth')(api)
-    require('./routes')(api)
+    require('./rides')(api)
     require('./trips')(api)
     require('./user')(api)
 

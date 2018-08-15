@@ -34,6 +34,20 @@ class UserController {
         })
     }
 
+    imageUpload(req, res){
+        functions.cloudinary.uploader.upload(req.body.img, result => {
+           Users.findById(req.user.id).then(user => {
+               if(!user){
+                return responseService(403, 'error', res, 'Unauthorized');
+               }
+               user.image = result.url
+               user.save().then(() => {
+                   responseService(200, 'success', res, 'Image Successfully uploaded', result.url);
+                })
+           })
+        })
+    }
+
     delete(req, res) {
         //Use UserID decoded from the JWT token in the header
         Users.findByIdAndRemove(req.user.id)
@@ -44,6 +58,8 @@ class UserController {
                 return responseService(500, 'error', res, 'There was an error while deleting account', e);
             });
     };
+    
+
 
 
 }

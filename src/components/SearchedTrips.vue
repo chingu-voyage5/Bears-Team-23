@@ -32,7 +32,7 @@
             <p v-if="search.length" class="is-size-6">Duration: {{ search[0].est_trip_length }}</p>
           </div>
 
-          <div v-if="search.length" v-for="user in search" :key="user.id" class="columns">
+          <div v-for="user in search" v-if="search.length" :key="user.id" class="columns">
             <div class="column is-one-thirds">
               <div class="driver-info media">
                 <div class="media-left">
@@ -87,16 +87,16 @@ export default {
       location: null,
       filter: '',
       maleImg: male,
-      femaleImg: female,
+      femaleImg: female
     };
   },
   computed: {
     ...mapGetters(['search', 'searchParams']),
-    noOfTrips(){
-      return this.search.length < 1 ? 'No' : this.search.length; 
+    noOfTrips() {
+      return this.search.length < 1 ? 'No' : this.search.length;
     },
-    ride(){
-      return (this.noOfTrips > 1 || this.noOfTrips === 0) ? 'rides' : 'ride';
+    ride() {
+      return this.noOfTrips > 1 || this.noOfTrips === 0 ? 'rides' : 'ride';
     }
   },
   methods: {

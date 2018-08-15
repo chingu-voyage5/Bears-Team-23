@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
-import { pick } from 'lodash';
 
 Vue.use(Vuex);
 
@@ -35,6 +34,9 @@ const getters = {
 const mutations = {
   set_auth(state, authData) {
     state.auth = authData;
+  },
+  set_image(state, image) {
+    state.auth.image = image;
   },
   set_token(state, tokenData) {
     state.token = tokenData;
@@ -83,13 +85,17 @@ const actions = {
   },
 
   async searchTrip({ commit }, search) {
-    console.log(search,'yes')
+    console.log(search, 'yes');
     const options = {
       params: search
-    }
-    if(this.getters.isAuthenticated) options.params.loggedUser = this.getters.user._id;
+    };
+    if (this.getters.isAuthenticated)
+      options.params.loggedUser = this.getters.user._id;
 
-    const rideResults = (await axios.get('http://localhost:5000/api/find', options)).data.data;
+    const rideResults = (await axios.get(
+      'http://localhost:5000/api/find',
+      options
+    )).data.data;
     commit('set_search_params', search);
     commit('set_search', rideResults);
   }

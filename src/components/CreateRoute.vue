@@ -180,8 +180,8 @@ export default {
         est_trip_duration: this.distanceCalc.text,
         route_creator: this.user._id,
         passenger_space: this.passengers,
+        seats_available: this.passengers,
         trip_start: this.departtime,
-        passenger: new Array(this.passengers).fill(null),
         extra: this.extra
       };
 

@@ -10,11 +10,12 @@ import 'vue-datetime/dist/vue-datetime.css';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
 import 'buefy/lib/buefy.css';
+import '@/filter.js';
+import _ from 'lodash';
 import App from './App';
 import router from './router';
 import store from './store/store.js';
-import '@/filter.js'
-import _ from 'lodash';
+
 
 Vue.use(Datetime);
 Vue.use(Moment);
@@ -22,7 +23,9 @@ Vue.component('icon', Icon);
 Vue.use(Buefy);
 Vue.use(Toasted);
 
-const authenticated = localStorage.vuex ? !_.isNull(JSON.parse(localStorage.vuex).auth) : false ;
+const authenticated = localStorage.vuex
+  ? !_.isNull(JSON.parse(localStorage.vuex).auth)
+  : false;
 
 if (authenticated) {
   const token = JSON.parse(localStorage.getItem('vuex')).auth.token;

@@ -4,6 +4,13 @@ const secrets = require('./dbconfig/secrets');
 const bcrypt = require('bcrypt-nodejs');
 const _ = require('lodash');
 const salt = bcrypt.genSaltSync(10);
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: secrets.CLOUD_NAME,
+  api_key: secrets.CLOUD_KEY,
+  api_secret: secrets.CLOUD_SECRET
+});
 
 
 const encryptPayload = (payload) => {
@@ -63,5 +70,6 @@ module.exports = {
   decrypter: passwordDecrypt,
   encryptPayload: encryptPayload,
   requestAuthorization: requestAuthorization,
-  response: json
+  response: json,
+  cloudinary
 }

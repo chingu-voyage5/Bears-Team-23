@@ -28,13 +28,13 @@
             </div>
           </div>
           <div class="field">
-                <p class="control has-icons-left">
-                  <datetime v-model="credentials.dob" class="is-medium" type="date"/> 
-                  <span class="icon is-small is-left ">
-                    <i class="fa fa-calendar is-myblue"/>
-                  </span>
-                </p>
-              </div>     
+            <p class="control has-icons-left">
+              <datetime v-model="credentials.dob" class="is-medium" type="date"/> 
+              <span class="icon is-small is-left ">
+                <i class="fa fa-calendar is-myblue"/>
+              </span>
+            </p>
+          </div>     
           <div class="field">
             <div class="control">
               <input v-model="credentials.email" class="input" type="email" placeholder="email">
@@ -65,13 +65,12 @@ export default {
   },
   data() {
     return {
-     credentials: {}
-    }
+      credentials: {}
+    };
   },
   methods: {
     ...mapActions(['signup']),
     async signingUp() {
-
       try {
         const response = await this.signup(this.credentials);
         if (response) {

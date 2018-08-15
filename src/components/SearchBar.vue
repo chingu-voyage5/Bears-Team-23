@@ -3,15 +3,15 @@
     <div class="trip-coords">
       <div class="field is-grouped">
         <div class="control">
-         <autocomplete ref="from" :initValue="searchParams.from.name" :classes="{input:'input'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteFrom" :encode-params="true"
-                                :filter-by-anchor="true" placeholder="Leaving from..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
+          <autocomplete ref="from" :init-value="searchParams.from.name" :classes="{input:'input'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteFrom" :encode-params="true"
+                        :filter-by-anchor="true" placeholder="Leaving from..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
         </div>
         <p class="control">
           <a class="button is-default" @click="exchange()"><i class="fa fa-exchange"/></a>
         </p>
         <div class="control">
-         <autocomplete ref="to" :initValue="searchParams.to.name" :classes="{input:'input'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteTo" :encode-params="true"
-                                :filter-by-anchor="true" placeholder="Going to..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
+          <autocomplete ref="to" :init-value="searchParams.to.name" :classes="{input:'input'}" :custom-params="{token:'dev'}" :process="processJSON" :on-select="processRouteTo" :encode-params="true"
+                        :filter-by-anchor="true" placeholder="Going to..." anchor="formatted_address" label="geometry.location.lat" url="https://maps.googleapis.com/maps/api/geocode/json?address="/>
         </div>
         <p class="control">
           <a class="button is-mybluebg has-text-white" @click="findRide()">Find</a>
@@ -29,22 +29,22 @@ import 'vue2-autocomplete-js/dist/style/vue2-autocomplete.css';
 
 export default {
   name: 'SearchBar',
+  components: {
+    Autocomplete
+  },
   data() {
     return {
-      journey:{}
+      journey: {}
     };
-  },
-  components:{
-    Autocomplete
   },
   computed: {
     ...mapGetters(['searchParams'])
   },
-  mounted(){
+  mounted() {
     this.journey.to = this.searchParams.to;
     this.journey.from = this.searchParams.from;
   },
-  methods:{
+  methods: {
     ...mapActions(['searchTrip']),
     exchange() {
       let temp = this.journey.from;
@@ -71,11 +71,9 @@ export default {
     async findRide() {
       try {
         await this.searchTrip(this.journey);
-      }
-      catch(err){
+      } catch (err) {
         console.log(err, 'Error while retrieving search');
-      }
-      finally {
+      } finally {
         this.$router.push('/search');
       }
     }

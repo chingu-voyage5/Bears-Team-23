@@ -17,7 +17,8 @@ class TripsController {
             
             if(!route.isDeleted && route.seats_available >= trip.seats){
                 const newTrip = Trips.create(trip);
-                  newTrip.then(() => {
+                  newTrip.then(trip => {
+                    route.passengers.push(trip._id);
                     route.seats_available -= trip.seats;
                     route.save().then(() => {;
                         return responseService(200,'success', res, 'Trip has been booked successfully');

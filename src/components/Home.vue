@@ -92,14 +92,11 @@ export default {
     async findRide() {
       try {
         await this.searchTrip(this.journey);
-      }
-      catch(err){
+      } catch (err) {
         console.log(err, 'Error while retrieving search');
-      }
-      finally {
+      } finally {
         this.$router.push('/search');
       }
-      
     }
   }
 };

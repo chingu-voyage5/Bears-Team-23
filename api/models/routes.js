@@ -63,8 +63,8 @@ const routeSchema = new Schema({
         default:'created'
     },
     passengers:[{
-        type: Schema.Types.ObjectId  ,
-        ref:'User'      
+        type: Schema.Types.ObjectId,
+        ref:'Trip'      
     }],
     extra:{
         type: String,

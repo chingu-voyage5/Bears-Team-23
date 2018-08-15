@@ -185,7 +185,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { EventBus } from '@/event';
 import Searchbar from '@/components/SearchBar';
 import Navbar from '@/components/shared/Navbar';
 import male from '@/assets/img/male.png';
@@ -201,7 +200,7 @@ export default {
       selected: null,
       maleImg: male,
       terms: false,
-      seats:null,
+      seats: null
     };
   },
   computed: {
@@ -224,10 +223,10 @@ export default {
         return true;
       } else return false;
     },
-    routeCreator(){
+    routeCreator() {
       return this.selected.route_creator;
     },
-    noSeats(){
+    noSeats() {
       return this.selected.seats_available < 1 ? true : false;
     }
   },
@@ -235,16 +234,17 @@ export default {
     this.selected = this.search[this.$store.state.selectedIndex];
     this.selected.passenger_space = Number(this.selected.passenger_space);
   },
-  methods:{
-    bookTrip(){
-      const pickedBody = this._.pick(this.selected, ['_id','route_creator'])
+  methods: {
+    bookTrip() {
+      const pickedBody = this._.pick(this.selected, ['_id', 'route_creator']);
       pickedBody.noOfSeats = this.seats;
-      
-      this.$axios.post('http://localhost:5000/api/trip', pickedBody)
+
+      this.$axios
+        .post('http://localhost:5000/api/trip', pickedBody)
         .then(resp => {
-          this.$toasted.success(resp.data.message).goAway(3000)
+          this.$toasted.success(resp.data.message).goAway(3000);
         })
-        .catch(e => this.$toasted.error(e.error.message).goAway(3000))
+        .catch(e => this.$toasted.error(e.error.message).goAway(3000));
     }
   }
 };

@@ -19,7 +19,7 @@
 import Navbar from '@/components/shared/Navbar';
 import Navtabs from '@/components/shared/NavTabs';
 import Panel from '@/components/shared/ProfilePanel';
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'UserProfile',
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {};
-  },
+  }
 };
 </script>
 <style scoped>

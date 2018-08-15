@@ -1,12 +1,10 @@
 require('dotenv').load();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
-const secrets = require('./dbconfig/secrets');
 const history = require('connect-history-api-fallback');
 const logger = require('morgan');
 const serveStatic = require('serve-static');
+
 
 //CORS CONFIGURATION
 
@@ -36,6 +34,9 @@ const corsConfig = (req, next) => {
 module.exports = (app, express) => {
 
   const api = require('./routes/api')(express);
+
+  
+
   app.use(cors(corsConfig), (req, res, next) => {
     next();
   })
