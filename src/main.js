@@ -35,7 +35,6 @@ if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = process.env.BASEURL_DEV;
 } else axios.defaults.baseURL = process.env.BASEURL_PROD;
 
-console.log(axios.defaults, 'defaults');
 Vue.prototype.$axios = axios;
 Vue.prototype._ = _;
 

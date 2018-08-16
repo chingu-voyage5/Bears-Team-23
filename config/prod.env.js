@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BASEURL_PROD:'"http://waka-ng.herokuapp.com/api"',
+  BASEURL_PROD:'"https://waka-ng.herokuapp.com/api"',
 }
