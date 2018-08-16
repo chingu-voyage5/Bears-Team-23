@@ -34,9 +34,7 @@ const corsConfig = (req, next) => {
 module.exports = (app, express) => {
 
   const api = require('./routes/api')(express);
-
   
-
   app.use(cors(corsConfig), (req, res, next) => {
     next();
   })
