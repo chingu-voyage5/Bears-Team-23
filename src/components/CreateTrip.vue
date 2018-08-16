@@ -34,10 +34,10 @@
             <div class="topcontent">
               <h3 class="is-size-4">Date & Time</h3>
                     
-              <label class="checkbox">
+              <!-- <label class="checkbox">
                 <input v-model="roundtrip" type="checkbox">
                 Round Trip
-              </label>
+              </label> -->
             </div>
                             
                                    
@@ -51,7 +51,7 @@
                 </span>
                 <datetime v-model="departtime" type="date"/>
               </div>
-              <span v-if="roundtrip">
+              <!-- <span v-if="roundtrip">
                 <label for="routeFrom">
                   <p class="is-size-6">Return Date</p>
                 </label>
@@ -61,14 +61,12 @@
                   </span>
                   
                 </div>
-              </span>
+              </span> -->
               <datetime v-model="returntime" type="datetime"/>                    
             </div>
           </div>
 
           <a class="button is-mybluebg pull-right" @click="createTrip">Create Trip</a>
-
-         
 
         </div>
 
@@ -117,7 +115,7 @@ export default {
       map: null,
       returntime: null,
       departtime: null,
-      roundtrip: true
+      roundtrip: false
     };
   },
   computed: {
@@ -141,7 +139,7 @@ export default {
         tripBody.trip_return_time = this.returntime;
       }
       this.$axios
-        .post('http://localhost:5000/api/trips', tripBody)
+        .post('/trips', tripBody)
         .then(resp => {
           this.$toasted.success(resp.data.message).goAway(5000);
         })
@@ -206,7 +204,7 @@ export default {
       this.calcRoute();
     },
     async getRoutes() {
-      let routes = await this.$axios.get('http://localhost:5000/api/route');
+      let routes = await this.$axios.get('/route');
       routes = routes.data.data;
       this.retrievedRoutes = routes;
     }

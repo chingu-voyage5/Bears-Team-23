@@ -18,12 +18,11 @@
               <input v-model="credentials.last_name" type="text" class="input" placeholder="Last Name">
             </div>
           </div>
-
           <div class="field">
             <div class="control">
-              <select v-model="gender" class="input">
-                <option disabled selected value >Gender</option>
-                <option v-for="(gender, index) in ['Male', 'Female']" :value="gender" :key="index">{{ role }}</option>
+              <select v-model="credentials.gender" class="input">
+                <option disabled selected>Gender</option>
+                <option v-for="(gender, index) in ['Male', 'Female']" :value="gender" :key="index">{{ gender }}</option>
               </select>
             </div>
           </div>
@@ -54,7 +53,7 @@
   </div>
 </template>
       
-      <script>
+<script>
 import { mapActions, mapGetters } from 'vuex';
 import Navbar from '@/components/shared/Navbar';
 

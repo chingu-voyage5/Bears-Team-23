@@ -1,9 +1,9 @@
 <template>
   <div>
-     <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
-      <hr>
-      <p class="pull-left">
-        <i class="fa fa-arrow-left" /> Back</p>
+    <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
+    <hr>
+    <p class="pull-left">
+    <i class="fa fa-arrow-left" /> Back</p>
     <div v-if="!carDetailsAvailable">
      
       <div>
@@ -23,7 +23,7 @@
 
                 <div class="field">
                   <div class="control">
-                    <input type="text" class="input" placeholder="Number plate" v-model="car.license">
+                    <input v-model="car.license" type="text" class="input" placeholder="Number plate">
                   </div>
                 </div>
 
@@ -45,7 +45,7 @@
               <p class="is-size-5 has-text-weight-bold">What make is your car?</p>
               <div class="search">
                 <div class="control has-icons-left">
-                  <input class="input is-large" type="text" placeholder="Search" v-model="car.make" @keyup.enter="carMake()">
+                  <input v-model="car.make" class="input is-large" type="text" placeholder="Search" @keyup.enter="carMake()">
                   <span class="icon is-medium is-left">
                     <i class="fa fa-search" />
                   </span>
@@ -94,7 +94,7 @@
               <p class="is-size-5 has-text-weight-bold">What year was it registered? </p>
               <p class="is-size-6 has-text-weight-bold">Passengers like to know if your car is modern or something a bit more vintage.</p>
               <hr>
-              <input type="number" class="input" placeholder="Enter year (YYYY)" v-model="car.year">
+              <input v-model="car.year" type="number" class="input" placeholder="Enter year (YYYY)">
               <button class="button" @click="carFind()">Submit</button>
             </div>
             <div class="column is-one-quarters" />
@@ -121,7 +121,7 @@
                   <ul>
                     <li v-for="car in carsRetrieved" :key="car.id" @click="selectCar(car)">
                       <div class="box">
-                        <p class="is-size-6 has-text-weight-bold">{{car.year}} {{car.make}} {{car.model}}
+                        <p class="is-size-6 has-text-weight-bold">{{ car.year }} {{ car.make }} {{ car.model }}
                           <i class="fa fa-chevron-right pull-right" />
                         </p>
                       </div>
@@ -201,7 +201,7 @@
               <div>
                 <div class="search">
                   <div class="control has-icons-left">
-                    <input class="input is-large" type="text" placeholder="Other Color" v-model="car.color">
+                    <input v-model="car.color" class="input is-large" type="text" placeholder="Other Color">
                     <span class="icon is-medium is-left">
                       <i class="fa fa-search" />
                     </span>
@@ -213,7 +213,7 @@
 
                           <label class="0">
                             <span class="is-size-6 has-text-weight-bold">Black</span>
-                            <input type="radio" id="0" class="radio" value="black" v-model="car.color">
+                            <input id="0" v-model="car.color" type="radio" class="radio" value="black">
                           </label>
                         </div>
                       </li>
@@ -221,7 +221,7 @@
                         <div class="control">
                           <label class="1">
                             <span class="is-size-6 has-text-weight-bold">White</span>
-                            <input type="radio" id="1" class="radio" value="white" v-model="car.color">
+                            <input id="1" v-model="car.color" type="radio" class="radio" value="white">
                           </label>
                         </div>
                       </li>
@@ -229,7 +229,7 @@
                         <div class="control">
                           <label class="2">
                             <span class="is-size-6 has-text-weight-bold">Red</span>
-                            <input type="radio" id="2" class="radio" value="red" v-model="car.color">
+                            <input id="2" v-model="car.color" type="radio" class="radio" value="red">
                           </label>
                         </div>
                       </li>
@@ -237,7 +237,7 @@
                         <div class="control">
                           <label class="3">
                             <span class="is-size-6 has-text-weight-bold">Grey</span>
-                            <input type="radio" id="3" class="radio" value="grey" v-model="car.color">
+                            <input id="3" v-model="car.color" type="radio" class="radio" value="grey">
                           </label>
                         </div>
                       </li>
@@ -245,7 +245,7 @@
                         <div class="control">
                           <label class="4">
                             <span class="is-size-6 has-text-weight-bold">Blue</span>
-                            <input type="radio" id="4" class="radio" name="answer">
+                            <input id="4" type="radio" class="radio" name="answer">
                           </label>
                         </div>
                       </li>
@@ -270,7 +270,7 @@
         <div class="columns">
           <div class="column is-one-fifth has-text-centered">
             <div class="car">
-               <img :src="hatchback" class="image is-48x48" alt="">
+              <img :src="hatchback" class="image is-48x48" alt="">
             </div>
            
             <br>
@@ -280,9 +280,9 @@
           </div>
           <div class="column is-four-fifths">
             <div class="pull-left">
-              <p class="is-size-4 has-text-weight-bold">{{user.car.year}} {{user.car.make}} {{user.car.model}}</p>
-              <p class="is-size-6 has-text-weight-bold">{{user.car.license.toUpperCase()}}</p>
-              <p class="is-size-6 has-text-weight-bold">{{user.car.color.toUpperCase()}}</p>
+              <p class="is-size-4 has-text-weight-bold">{{ user.car.year }} {{ user.car.make }} {{ user.car.model }}</p>
+              <p class="is-size-6 has-text-weight-bold">{{ user.car.license.toUpperCase() }}</p>
+              <p class="is-size-6 has-text-weight-bold">{{ user.car.color.toUpperCase() }}</p>
             </div>
           </div>
         </div>
@@ -292,141 +292,146 @@
 </template>
 
 <script>
-  import sedan from '@/assets/img/car-sedan.png';
-  import suv from '@/assets/img/car-suv.png';
-  import estate from '@/assets/img/car-estate.png';
-  import convertible from '@/assets/img/car-convertible.png';
-  import hatchback from '@/assets/img/car-hatchback.png';
-  import {
-    mapGetters
-  } from 'vuex';
+import sedan from '@/assets/img/car-sedan.png';
+import suv from '@/assets/img/car-suv.png';
+import estate from '@/assets/img/car-estate.png';
+import convertible from '@/assets/img/car-convertible.png';
+import hatchback from '@/assets/img/car-hatchback.png';
+import { mapGetters } from 'vuex';
 
-
-  export default {
-    name: 'CarProfile',
-    data() {
-      return {
-        step: 1,
-        sedan,
-        suv,
-        estate,
-        convertible,
-        hatchback,
-        car: {},
-        loading: false,
-        carsRetrieved: null
-      };
+export default {
+  name: 'CarProfile',
+  data() {
+    return {
+      step: 1,
+      sedan,
+      suv,
+      estate,
+      convertible,
+      hatchback,
+      car: {},
+      loading: false,
+      carsRetrieved: null
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    firstStep() {
+      return this.step === 1;
     },
-    computed: {
-      ...mapGetters(['user']),
-      firstStep() {
-        return this.step === 1;
-      },
-      secondStep() {
-        return this.step === 2;
-      },
-      thirdStep() {
-        return this.step === 3;
-      },
-      fourthStep() {
-        return this.step === 4;
-      },
-      fifthStep() {
-        return this.step === 5;
-      },
-      sixthStep() {
-        return this.step === 6;
-      },
-      finalStep() {
-        return this.step === 7;
-      },
-      carDetailsAvailable() {
-        return this.user.car ? true : false;
-      }
+    secondStep() {
+      return this.step === 2;
     },
-    methods: {
-      carFind() {
-        this.loading = true;
-        if (!_.isUndefined(this.car.make) &&
-          !_.isNull(this.car.make) &&
-          this.car.make.trim() !== '') {
-          this.$axios.get('http://localhost:5000/api/cars', {
-              params: this.car
-            }).then(resp => {
-              const {
-                data
-              } = resp.data;
-              this.carsRetrieved = data;
-              this.loading = false;
-              this.step += 1
-            })
-            .catch(err => {
-              this.$toasted.error('Error while retrieving car details').goAway(3000);
-            })
-        }
-      },
-      carMake() {
-        if (!_.isUndefined(this.car.make) &&
-          !_.isNull(this.car.make) &&
-          this.car.make.trim() !== '') {
-          this.step += 1;
-        }
-      },
-      selectCar(car) {
-        this.car = Object.assign(this.car, car);
-        this.step += 1;
-      },
-      addCar() {
-        this.$axios.put('http://localhost:5000/api/user', {
-            car: this.car
-          }).then(resp => {
-            const {
-              car
-            } = resp.data.data;
-            this.$store.commit('set_car', car);
-            this.$toasted.success('Car details added successfully').goAway(3000);
+    thirdStep() {
+      return this.step === 3;
+    },
+    fourthStep() {
+      return this.step === 4;
+    },
+    fifthStep() {
+      return this.step === 5;
+    },
+    sixthStep() {
+      return this.step === 6;
+    },
+    finalStep() {
+      return this.step === 7;
+    },
+    carDetailsAvailable() {
+      return this.user.car ? true : false;
+    }
+  },
+  methods: {
+    carFind() {
+      this.loading = true;
+      if (
+        !_.isUndefined(this.car.make) &&
+        !_.isNull(this.car.make) &&
+        this.car.make.trim() !== ''
+      ) {
+        this.$axios
+          .get('/cars', {
+            params: this.car
+          })
+          .then(resp => {
+            const { data } = resp.data;
+            this.carsRetrieved = data;
+            this.loading = false;
+            this.step += 1;
           })
           .catch(err => {
-            this.$toasted.error('Error occured while updating car details').goAway(3000);
-          })
-      },
-      changeDetails() {
-        this.car = this.user.car;
-        this.carDetailsAvailable = false;
+            this.$toasted
+              .error('Error while retrieving car details')
+              .goAway(3000);
+          });
       }
+    },
+    carMake() {
+      if (
+        !_.isUndefined(this.car.make) &&
+        !_.isNull(this.car.make) &&
+        this.car.make.trim() !== ''
+      ) {
+        this.step += 1;
+      }
+    },
+    selectCar(car) {
+      this.car = Object.assign(this.car, car);
+      this.step += 1;
+    },
+    addCar() {
+      this.$axios
+        .put('/user', {
+          car: this.car
+        })
+        .then(resp => {
+          const { car } = resp.data.data;
+          this.$store.commit('set_car', car);
+          this.$toasted.success('Car details added successfully').goAway(3000);
+        })
+        .catch(err => {
+          this.$toasted
+            .error('Error occured while updating car details')
+            .goAway(3000);
+        });
+    },
+    changeDetails() {
+      this.car = this.user.car;
+      this.carDetailsAvailable = false;
     }
-  };
+  }
+};
 </script>
 <style scoped>
-  .table td {
-    border: none !important;
-  }
+.table td {
+  border: none !important;
+}
 
-  .box,
-  .table {
-    background-color: #eeeeee;
-  }
+.box,
+.table {
+  background-color: #eeeeee;
+}
 
-  .columns.is-centered {
-    margin: 50px 0;
-  }
+.columns.is-centered {
+  margin: 50px 0;
+}
 
-  input[type='text'],
-  button {
-    width: 100%;
-    margin: 5px 0;
-  }
+input[type='text'],
+button {
+  width: 100%;
+  margin: 5px 0;
+}
 
-  .search {
-    margin: 30px 0;
-  }
+.search {
+  margin: 30px 0;
+}
 
-  ul>li {
-    margin: 30px 0;
-  }
+ul > li {
+  margin: 30px 0;
+}
 
 .car img {
-    display:block;
-    margin:auto;
+  display: block;
+  margin: auto;
 }
 </style>

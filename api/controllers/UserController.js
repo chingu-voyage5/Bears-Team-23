@@ -17,7 +17,7 @@ class UserController {
     };
 
     view(req, res){
-        Users.findById(req.params.id).populateAll().then(user=>{
+        Users.findById(req.params.id).populateAll().then(user => {
             return responseService(200, 'success', res, 'Users retrieved successfully', user);
         })
         .catch(e=>{
@@ -46,7 +46,7 @@ class UserController {
             });
     };
 
-    //Needs to be refactored to its own utility controller 
+    //Needs to be refactored to its own utility controller
 
     ratings(req, res){
         if(req.query.type == 'received'){

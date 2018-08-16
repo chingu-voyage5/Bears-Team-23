@@ -5,7 +5,7 @@
       <p class="is-size-4 has-text-weight-bold">Change Password</p>
       <hr>
       <div class="box">
-        <p class="is-size-6 has-text-weight-bold">If you forget your password it would be sent to {{user.email}}</p>
+        <p class="is-size-6 has-text-weight-bold">If you forget your password it would be sent to {{ user.email }}</p>
         <br>
         <table class="table">
           <tbody>
@@ -14,7 +14,7 @@
                 <p class="is-size-6 has-text-weight-bold">Current password</p>
               </td>
               <td>
-                <input type="password" class="input" v-model="password.current">
+                <input v-model="password.current" type="password" class="input">
               </td>
             </tr>
             <tr>
@@ -22,7 +22,7 @@
                 <p class="is-size-6 has-text-weight-bold">New password</p>
               </td>
               <td>
-                <input type="password" class="input" v-model="password.new">
+                <input v-model="password.new" type="password" class="input">
               </td>
             </tr>
             <tr>
@@ -30,13 +30,13 @@
                 <p class="is-size-6 has-text-weight-bold">Confirm new password</p>
               </td>
               <td>
-                <input type="password" class="input" v-model="password.confirm">
+                <input v-model="password.confirm" type="password" class="input">
               </td>
             </tr>
             <tr>
               <td/>
               <td>
-                <button class="button is-myblue" :disabled="!passwordValid" @click="save()">Save</button>
+                <button :disabled="!passwordValid" class="button is-myblue" @click="save()">Save</button>
               </td>
             </tr>
           </tbody>
@@ -49,6 +49,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'PasswordProfile',
   data() {
@@ -57,16 +58,16 @@ export default {
         current: '',
         new: '',
         confirm: ''
-      },
+      }
     };
   },
-  computed:{
+  computed: {
     ...mapGetters(['user']),
-    
+
     passwordValid() {
       if (
         !this.password.current ||
-         this.password.current.trim() === '' ||
+        this.password.current.trim() === '' ||
         this.password.new.trim() === '' ||
         this.password.confirm.trim() === '' ||
         this.password.current.trim() === this.password.new.trim() ||
@@ -76,18 +77,22 @@ export default {
       } else return true;
     }
   },
-  methods:{
+  methods: {
     ...mapActions(['logout']),
-    save(){
-      this.$axios.put('http://localhost:5000/api/password/change', this.password ).then(resp => {
-        this.$toasted.success('Password updated Successfully, Please Login').goAway(3000);
-         this.logout().then(() => {
-          this.$router.push('/login');
+    save() {
+      this.$axios
+        .put('/password/change', this.password)
+        .then(resp => {
+          this.$toasted
+            .success('Password updated Successfully, Please Login')
+            .goAway(3000);
+          this.logout().then(() => {
+            this.$router.push('/login');
+          });
+        })
+        .catch(e => {
+          this.$toasted.error('Error while saving password').goAway(2000);
         });
-      })
-      .catch(e => {
-        this.$toasted.error('Error while saving password').goAway(2000)
-      })
     }
   }
 };

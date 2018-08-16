@@ -16,7 +16,7 @@
                     <div class="img-holder">
                      
                       <label for="0">
-                        <input type="radio" id="0" value="0" v-model="user.pref.chattiness">
+                        <input id="0" v-model="user.pref.chattiness" type="radio" value="0">
                         <img :src="prefChatNo" class="image is-48x48" alt="">
                       </label>
                       
@@ -24,9 +24,9 @@
                   </td>
                   <td>
                     <div class="img-holder">
-                        <label for="1">
-                        <input type="radio" id="1" value="1" v-model="user.pref.chattiness">
-                       <img :src="prefChatMaybe" class="image is-48x48" alt="">
+                      <label for="1">
+                        <input id="1" v-model="user.pref.chattiness" type="radio" value="1">
+                        <img :src="prefChatMaybe" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -34,7 +34,7 @@
                   <td>
                     <div class="img-holder">
                       <label for="2">
-                        <input type="radio" id="2" value="2" v-model="user.pref.chattiness">
+                        <input id="2" v-model="user.pref.chattiness" type="radio" value="2">
                         <img :src="prefChatYes" class="image is-48x48" alt="">
                       </label>
                      
@@ -48,8 +48,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="3">
-                        <input type="radio" id="3" value="0" v-model="user.pref.music">
-                      <img :src="prefMusicNo" class="image is-48x48" alt="">
+                        <input id="3" v-model="user.pref.music" type="radio" value="0">
+                        <img :src="prefMusicNo" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -57,8 +57,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="4">
-                        <input type="radio" id="4" value="1" v-model="user.pref.music">
-                      <img :src="prefMusicMaybe" class="image is-48x48" alt="">
+                        <input id="4" v-model="user.pref.music" type="radio" value="1">
+                        <img :src="prefMusicMaybe" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -66,8 +66,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="5">
-                        <input type="radio" id="5" value="2" v-model="user.pref.music">
-                       <img :src="prefMusicYes" class="image is-48x48" alt="">
+                        <input id="5" v-model="user.pref.music" type="radio" value="2">
+                        <img :src="prefMusicYes" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -80,8 +80,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="6">
-                        <input type="radio" id="6" value="0" v-model="user.pref.pets">
-                       <img :src="prefPetsNo" class="image is-48x48" alt="">
+                        <input id="6" v-model="user.pref.pets" type="radio" value="0">
+                        <img :src="prefPetsNo" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -89,8 +89,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="7">
-                        <input type="radio" id="7" value="1" v-model="user.pref.pets">
-                       <img :src="prefPetsMaybe" class="image is-48x48" alt="">
+                        <input id="7" v-model="user.pref.pets" type="radio" value="1">
+                        <img :src="prefPetsMaybe" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -98,8 +98,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="8">
-                        <input type="radio" id="8" value="2" v-model="user.pref.pets">
-                       <img :src="prefPetsYes" class="image is-48x48" alt="">
+                        <input id="8" v-model="user.pref.pets" type="radio" value="2">
+                        <img :src="prefPetsYes" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -112,8 +112,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="9">
-                        <input type="radio" id="9" value="0" v-model="user.pref.smoking">
-                       <img :src="prefSmokingNo" class="image is-48x48" alt="">
+                        <input id="9" v-model="user.pref.smoking" type="radio" value="0">
+                        <img :src="prefSmokingNo" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -121,8 +121,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="10">
-                        <input type="radio" id="10" value="1" v-model="user.pref.smoking">
-                       <img :src="prefSmokingMaybe" class="image is-48x48" alt="">
+                        <input id="10" v-model="user.pref.smoking" type="radio" value="1">
+                        <img :src="prefSmokingMaybe" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -130,8 +130,8 @@
                   <td>
                     <div class="img-holder">
                       <label for="11">
-                        <input type="radio" id="11" value="2" v-model="user.pref.smoking">
-                       <img :src="prefSmokingYes" class="image is-48x48" alt="">
+                        <input id="11" v-model="user.pref.smoking" type="radio" value="2">
+                        <img :src="prefSmokingYes" class="image is-48x48" alt="">
                       </label>
                       
                     </div>
@@ -168,6 +168,7 @@ import prefSmokingYes from '@/assets/img/pref-smoking-yes.png';
 import { mapGetters } from 'vuex';
 
 import Vue from 'vue';
+
 export default {
   name: 'PreferenceProfile',
   data() {
@@ -183,24 +184,29 @@ export default {
       prefPetsYes,
       prefSmokingNo,
       prefSmokingMaybe,
-      prefSmokingYes,
+      prefSmokingYes
     };
   },
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
-  created(){
-  },
-  methods:{
-    savePreferences(){
-      this.$axios.put('http://localhost:5000/api/user', { pref : this.user.pref }).then(resp => {
-       const { pref } = resp.data.data;
-       this.$store.commit('set_pref', pref);
-       this.$toasted.success('Preferences updated successfully').goAway(3000);
-      })
-      .catch(err => {
-        this.$toasted.error('There was an error while updating preferences').goAway(3000);
-      })
+  created() {},
+  methods: {
+    savePreferences() {
+      this.$axios
+        .put('/user', { pref: this.user.pref })
+        .then(resp => {
+          const { pref } = resp.data.data;
+          this.$store.commit('set_pref', pref);
+          this.$toasted
+            .success('Preferences updated successfully')
+            .goAway(3000);
+        })
+        .catch(err => {
+          this.$toasted
+            .error('There was an error while updating preferences')
+            .goAway(3000);
+        });
     }
   }
 };
@@ -227,16 +233,19 @@ button {
 }
 
 /* Image and label styles*/
-label > input{ /* HIDE RADIO */
+label > input {
+  /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */
   position: absolute; /* Remove input from document flow */
 }
-label > input + img{ /* IMAGE STYLES */
-  cursor:pointer;
-  border:2px solid transparent;
+label > input + img {
+  /* IMAGE STYLES */
+  cursor: pointer;
+  border: 2px solid transparent;
 }
-label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
-  border:2px solid teal;
-  border-radius: 5px
+label > input:checked + img {
+  /* (RADIO CHECKED) IMAGE STYLES */
+  border: 2px solid teal;
+  border-radius: 5px;
 }
 </style>

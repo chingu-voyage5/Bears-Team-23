@@ -44,7 +44,7 @@ const mutations = {
   set_pref(state, preference) {
     state.auth.pref = preference;
   },
-  set_car(state, car){
+  set_car(state, car) {
     state.auth.car = car;
   },
   set_search_params(state, payload) {
@@ -60,10 +60,7 @@ const mutations = {
 
 const actions = {
   async login({ commit }, credentials) {
-    const response = await axios.post(
-      'http://localhost:5000/api/login',
-      credentials
-    );
+    const response = await axios.post('/login', credentials);
     const { data } = response.data;
     commit('set_token', data.token);
     delete data.token;
@@ -82,10 +79,7 @@ const actions = {
   },
 
   async signup({ commit }, credentials) {
-    const response = await axios.post(
-      'http://localhost:5000/api/signup',
-      credentials
-    );
+    const response = await axios.post('/signup', credentials);
     const { data } = response.data;
     return data;
   },
@@ -98,10 +92,7 @@ const actions = {
     if (this.getters.isAuthenticated)
       options.params.loggedUser = this.getters.user._id;
 
-    const rideResults = (await axios.get(
-      'http://localhost:5000/api/find',
-      options
-    )).data.data;
+    const rideResults = (await axios.get('/find', options)).data.data;
     commit('set_search_params', search);
     commit('set_search', rideResults);
   }

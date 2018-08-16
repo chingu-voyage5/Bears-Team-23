@@ -240,7 +240,7 @@ export default {
       pickedBody.noOfSeats = this.seats;
 
       this.$axios
-        .post('http://localhost:5000/api/trip', pickedBody)
+        .post('/trip', pickedBody)
         .then(resp => {
           this.$toasted.success(resp.data.message).goAway(3000);
         })

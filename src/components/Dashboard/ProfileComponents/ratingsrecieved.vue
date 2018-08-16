@@ -1,37 +1,37 @@
 <template>
   <div>
-     <p class="is-size-4 has-text-weight-bold">Ratings Received</p>
+    <p class="is-size-4 has-text-weight-bold">Ratings Received</p>
     <div>
             
       <div class="box">
         <div class="columns">
         
-          <div class="column is-one-thirds" v-if="ratingsAvailable">
+          <div v-if="ratingsAvailable" class="column is-one-thirds">
             <ul>
               <li>
                 <p class="is-size-6 has-text-weight-bold">Outstanding</p>
-                <progress class="progress is-small" :value="fiveStar" max="100">15%</progress>
+                <progress :value="fiveStar" class="progress is-small" max="100">15%</progress>
               </li>
               <li>
                 <p class="is-size-6 has-text-weight-bold">Excellent</p>
-                <progress class="progress is-small" :value="fourStar" max="100">15%</progress>
+                <progress :value="fourStar" class="progress is-small" max="100">15%</progress>
               </li>
               <li>
                 <p class="is-size-6 has-text-weight-bold">Good</p>
-                <progress class="progress is-small" :value="threeStar" max="100">15%</progress>
+                <progress :value="threeStar" class="progress is-small" max="100">15%</progress>
               </li>
               <li>
                 <p class="is-size-6 has-text-weight-bold">Poor</p>
-                <progress class="progress is-small" :value="twoStar" max="100">15%</progress>
+                <progress :value="twoStar" class="progress is-small" max="100">15%</progress>
               </li>
               <li>
                 <p class="is-size-6 has-text-weight-bold">Very Dissapointing</p>
-                <progress class="progress is-small" :value="oneStar" max="100">15%</progress>
+                <progress :value="oneStar" class="progress is-small" max="100">15%</progress>
               </li>
             </ul>
           </div>
-          <div class="column is-three-quarters" v-else>
-              <p class="is-size-3">No ratings available at the moment. Offer a ride maybe ?</p>
+          <div v-else class="column is-three-quarters">
+            <p class="is-size-3">No ratings available at the moment. Offer a ride maybe ?</p>
           </div>
         </div>
 
@@ -45,46 +45,54 @@ export default {
   name: 'RatingsRecieved',
   data() {
     return {
-      ratings:null
+      ratings: null
     };
   },
-  created(){
-    this.fetchRatings();
-  },
-  computed:{
-    ratingsAvailable(){
+  computed: {
+    ratingsAvailable() {
       return !_.isNull(this.ratings);
     },
-     oneStar(){
+    oneStar() {
       const oneStar = this.ratings.filter(r => r.rating == 1);
-      return oneStar.length ? (oneStar.length * 100)/this.ratings.length * 100 : 0
+      return oneStar.length
+        ? oneStar.length * 100 / this.ratings.length * 100
+        : 0;
     },
-     twoStar(){
+    twoStar() {
       const twoStar = this.ratings.filter(r => r.rating == 2);
-      return twoStar.length ? (twoStar.length * 100)/this.ratings.length: 0
+      return twoStar.length ? twoStar.length * 100 / this.ratings.length : 0;
     },
-     threeStar(){
+    threeStar() {
       const threeStar = this.ratings.filter(r => r.rating == 3);
-      return threeStar.length ? (threeStar.length * 100)/this.ratings.length : 0
+      return threeStar.length
+        ? threeStar.length * 100 / this.ratings.length
+        : 0;
     },
-     fourStar(){
+    fourStar() {
       const fourStar = this.ratings.filter(r => r.rating == 4);
-      return fourStar.length ? (fourStar.length * 100)/this.ratings.length : 0;
+      return fourStar.length ? fourStar.length * 100 / this.ratings.length : 0;
     },
-     fiveStar(){
+    fiveStar() {
       const fiveStar = this.ratings.filter(r => r.rating == 5);
-      return fiveStar.length ? (fiveStar.length * 100)/this.ratings.length : 0
+      return fiveStar.length ? fiveStar.length * 100 / this.ratings.length : 0;
     }
   },
-  methods:{
-    fetchRatings(){
-      this.$axios.get('http://localhost:5000/api/ratings',{params:{type:'received'}}).then( resp => {
-        const { data } = resp.data;
-        this.ratings = data;
-      })
-      .catch(err => {
-        this.$toasted.error('There was an error while fetching ratings at the moment').goAway(3000);
-      })
+  created() {
+    this.fetchRatings();
+  },
+  methods: {
+    fetchRatings() {
+      this.$axios
+        .get('/ratings', { params: { type: 'received' } })
+        .then(resp => {
+          const { data } = resp.data;
+          this.ratings = data;
+        })
+        .catch(err => {
+          this.$toasted
+            .error('There was an error while fetching ratings at the moment')
+            .goAway(3000);
+        });
     }
   }
 };

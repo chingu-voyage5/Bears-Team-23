@@ -17,11 +17,11 @@
             <hr>
             <p class="is-size-6 has-text-weight-bold">Member Verification</p>
             <ul>
-              <li v-if='!user.phone'>
+              <li v-if="!user.phone">
                 <i class="fa fa-exclamation-circle"/>
                 <router-link to="/profile/general"> Verify your Phone Number</router-link>
               </li>
-              <li v-if='!emailVerified'>
+              <li v-if="!emailVerified">
                 <i class="fa fa-exclamation-circle"/>
                 <router-link to="/profile/verification="> Verify your Email Address</router-link>
               </li>
@@ -32,13 +32,13 @@
             </ul>
             <br>
             <span v-if="!profileVerified">
-            <i class="fa fa-arrow-right"/>
-            <router-link to="/profile/verification"> Complete your profile verification</router-link>
+              <i class="fa fa-arrow-right"/>
+              <router-link to="/profile/verification"> Complete your profile verification</router-link>
             </span>
             <hr>
             <p class="is-size-6 has-text-weight-bold">Member Activity</p>
             <br>
-            <p>Member since {{user.createdAt | moment('MMMM YYYY')}}</p>
+            <p>Member since {{ user.createdAt | moment('MMMM YYYY') }}</p>
           </div>
         </div>
         <div class="column is-two-thirds">
@@ -46,8 +46,8 @@
           <i class="fa fa-bell"/> Notifications</p>
           <hr>
           <span v-if="!photoVerified">
-          <router-link to="/profile/photo" class="is-size-5 has-text-weight-bold">Add your photo</router-link>
-          <p class="is-size-6">People like to put a face to a name</p>
+            <router-link to="/profile/photo" class="is-size-5 has-text-weight-bold">Add your photo</router-link>
+            <p class="is-size-6">People like to put a face to a name</p>
           </span>
           <hr>
           <br>
@@ -71,19 +71,29 @@ export default {
     Navbar,
     Navtabs
   },
-  computed:{
+  computed: {
     ...mapGetters(['user']),
 
-    emailVerified(){
-      return (~this.user.verifications.filter(v => v.type === 'email' && v.verified === true)) >=0
+    emailVerified() {
+      return (
+        ~this.user.verifications.filter(
+          v => v.type === 'email' && v.verified === true
+        ) >= 0
+      );
     },
-    photoVerified(){
-      return (~this.user.verifications.filter(v => v.type === 'photo' && v.verified === true)) >=0
-    }, 
-    profileVerified(){
-      return this.emailVerified === true && 
-             this.photoVerified === true && 
-             (this.user.phone !== null || this.user.phone !== undefined)
+    photoVerified() {
+      return (
+        ~this.user.verifications.filter(
+          v => v.type === 'photo' && v.verified === true
+        ) >= 0
+      );
+    },
+    profileVerified() {
+      return (
+        this.emailVerified === true &&
+        this.photoVerified === true &&
+        (this.user.phone !== null || this.user.phone !== undefined)
+      );
     }
   },
   data() {

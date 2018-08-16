@@ -105,7 +105,7 @@ export default {
   methods: {
     save() {
       this.$axios
-        .put(`http://localhost:5000/api/user`, this.user)
+        .put(`/user`, this.user)
         .then(resp => {
           const { data } = resp.data;
           this.$store.commit('set_auth', data);
@@ -119,8 +119,7 @@ export default {
             .goAway(2500);
         });
     }
-  },
-  
+  }
 };
 </script>
 <style scoped>

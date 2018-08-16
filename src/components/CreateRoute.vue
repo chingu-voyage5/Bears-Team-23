@@ -199,16 +199,12 @@ export default {
         returnRouteBody.trip_start = this.returntime;
 
         try {
-          const originalTrip = (await this.$axios.post(
-            'http://localhost:5000/api/route',
-            routeBody
-          )).data;
+          const originalTrip = (await this.$axios.post('/route', routeBody))
+            .data;
 
           returnRouteBody.init_route = originalTrip.data._id;
-          const returnTrip = (await this.$axios.post(
-            'http://localhost:5000/api/route',
-            returnRouteBody
-          )).data;
+          const returnTrip = (await this.$axios.post('/route', returnRouteBody))
+            .data;
 
           this.$toasted.success(returnTrip.message).goAway(5000);
         } catch (err) {
@@ -216,10 +212,8 @@ export default {
         }
       } else {
         try {
-          const originalTrip = (await this.$axios.post(
-            'http://localhost:5000/api/route',
-            routeBody
-          )).data;
+          const originalTrip = (await this.$axios.post('/route', routeBody))
+            .data;
           this.$toasted.success(originalTrip.message).goAway(5000);
         } catch (err) {
           this.$toasted.error(err).goAway(5000);

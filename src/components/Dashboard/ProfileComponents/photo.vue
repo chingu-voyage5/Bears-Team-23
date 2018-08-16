@@ -19,14 +19,14 @@
               </div>
               <br>
               <span v-if="!successful">
-              <label v-if="!upload_start"  class="button is-myblue" style="padding:20px;">
-                <input type="file" accept="image/*" capture="camera" hidden @change="upload($event.target.files)"> Choose a file
-              </label>
-              <a v-if="upload_start" class="button is-default" @click="saveImage()">Upload</a>
+                <label v-if="!upload_start" class="button is-myblue" style="padding:20px;">
+                  <input type="file" accept="image/*" capture="camera" hidden @change="upload($event.target.files)"> Choose a file
+                </label>
+                <a v-if="upload_start" class="button is-default" @click="saveImage()">Upload</a>
               
-              <br>
-              <br>
-              <p class="is-size-6 ">PNG, JPG or GIF, max. 3MB</p>
+                <br>
+                <br>
+                <p class="is-size-6 ">PNG, JPG or GIF, max. 3MB</p>
               </span>
             </div>
           </div>
@@ -91,26 +91,24 @@ export default {
     return {
       capture,
       goodpic,
-      init_img:null,
-      upload_start:false,
+      init_img: null,
+      upload_start: false,
       successful: false
     };
   },
-  created(){
-
+  created() {},
+  computed: {
+    ...mapGetters(['user'])
   },
-  computed:{
-    ...mapGetters(['user']),
-  },
-  methods:{
-   upload(element) {
+  methods: {
+    upload(element) {
       this.processingImage = true;
       const photofile = element[0];
       this.showPreview(photofile);
     },
-  showPreview(file) {
+    showPreview(file) {
       // let loader = this.$loading.show();
-      this.upload_start = true
+      this.upload_start = true;
       try {
         const reader = new FileReader();
         reader.onload = e => {
@@ -121,19 +119,20 @@ export default {
         console.log('Error ', e);
       }
     },
-    saveImage(){
-    this.$axios.post('http://localhost:5000/api/user/upload', { img:this.init_img }).then(resp => {
-        const image = resp.data.data;
-        this.$store.commit('set_image', image);
-        this.successful = this.user.image ? true : false;
-        this.$toasted.success('Image Upload Successful').goAway(3000);
-    })
-    .catch(err => {
-      this.$toasted.error('Image upload failed').goAway(3000);
-    })
+    saveImage() {
+      this.$axios
+        .post('/user/upload', { img: this.init_img })
+        .then(resp => {
+          const image = resp.data.data;
+          this.$store.commit('set_image', image);
+          this.successful = this.user.image ? true : false;
+          this.$toasted.success('Image Upload Successful').goAway(3000);
+        })
+        .catch(err => {
+          this.$toasted.error('Image upload failed').goAway(3000);
+        });
+    }
   }
-  },
-  
 };
 </script>
 <style scoped>

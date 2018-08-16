@@ -29,7 +29,7 @@ const userSchema = new Schema({
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
     car: {
-        type: Schema.Types.Mixed
+        type: Schema.Types.Mixed, 
     },
     driver_license: {
         type: String
@@ -38,12 +38,12 @@ const userSchema = new Schema({
         type: String
     },
     gender:{
-        type: String
+        type: String,
+        required: true
     },
     password: {
         type: String,
         required: true,
-        minlength: 6
     },
     isDeleted: {
         type: Boolean,
