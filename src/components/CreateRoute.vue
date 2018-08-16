@@ -46,10 +46,10 @@
               <div class="topcontent">
                 <h3 class="is-size-4">Date & Time</h3>
                           
-                <label class="checkbox">
+                <!-- <label class="checkbox">
                   <input v-model="roundtrip" type="checkbox">
                   Round Trip
-                </label>
+                </label> -->
               </div>
                                   
                                          
@@ -63,7 +63,7 @@
                   </span>
                   <datetime v-model="departtime" type="date"/>
                 </div>
-                <span v-if="roundtrip">
+                <!-- <span v-if="roundtrip">
                   <label for="routeFrom">
                     <p class="is-size-6">Return Date</p>
                   </label>
@@ -75,7 +75,7 @@
                   </div>
                     
                   <datetime v-model="returntime" type="date"/>
-                </span> 
+                </span>  -->
                   
                  
               </div>
@@ -150,7 +150,7 @@ export default {
       distanceCalc: null,
       durationCalc: null,
       map: null,
-      roundtrip: true,
+      roundtrip: false,
       passengers: null,
       departtime: null,
       returntime: null,

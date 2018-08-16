@@ -20,10 +20,10 @@
               </p>
             </div>
                        
-            <label for="date" class="label">Departure time: </label>
+            <!-- <label for="date" class="label">Departure time: </label>
             <p class="control">  
               <vue-slider ref="slider" v-model="value"/>
-            </p> 
+            </p>  -->
           </div>
         </div>
         <div class="column is-three-quarters">

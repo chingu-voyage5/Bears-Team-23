@@ -118,9 +118,7 @@ export default {
         };
         reader.readAsDataURL(file);
       } catch (e) {
-        console.log('Error sending face to kairos', e);
-        this.skipFaceUpload = true;
-        loader.hide();
+        console.log('Error ', e);
       }
     },
     saveImage(){

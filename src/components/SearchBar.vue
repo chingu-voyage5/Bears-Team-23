@@ -92,4 +92,11 @@ export default {
 .is-mybluebg {
   background-color: #108cce;
 }
+@media (min-width: 320px) and (max-width: 480px) { 
+ .field.is-grouped {
+        flex-direction: column;
+ }
+  
+}
+
 </style>

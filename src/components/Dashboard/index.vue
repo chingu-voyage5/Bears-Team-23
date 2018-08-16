@@ -23,11 +23,11 @@
               </li>
               <li v-if='!emailVerified'>
                 <i class="fa fa-exclamation-circle"/>
-                <router-link to="/profile/verification"> Verify your Email Address</router-link>
+                <router-link to="/profile/verification="> Verify your Email Address</router-link>
               </li>
               <li v-if="!photoVerified">
                 <i class="fa fa-exclamation-circle"/>
-                <router-link to="/profile/verification"> Verify your Profile Photo</router-link>
+                <router-link to="/profile/photo"> Verify your Profile Photo</router-link>
               </li>
             </ul>
             <br>

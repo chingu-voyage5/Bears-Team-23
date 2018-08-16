@@ -33,7 +33,6 @@ class AuthController {
         Users.findOne({
                 email: req.body.email
             })
-            .exec()
             .then(user => {
                 if (!user) {
                     return responseService(401, 'error', res, 'Auth Error', null);
@@ -55,6 +54,22 @@ class AuthController {
                 return responseService(500, 'error', res, 'There was an error while trying to login', null, e);
             })
     };
+
+    changePassword(req, res){
+        Users.findById(req.user.id).then(user => {
+            if(functions.decrypter(req.body.current, user.password)){
+                const newPassword = functions.hasher(req.body.new)
+                user.password = newPassword;
+                user.save().then(() => {
+                    return responseService(200, 'success', res, 'Successfully updated Password')
+                })
+                .catch(e => {
+                    return responseService(500, 'error', res, 'Error occured while saving user', e)
+                })
+            }
+            else return responseService(403, 'error', res, 'Password Incorrect')
+        })
+    }
 
 
 }

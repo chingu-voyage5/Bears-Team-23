@@ -8,4 +8,5 @@ module.exports = (api) => {
     api.delete('/user/:id', requestAuthorization, UserController.delete);
     api.post('/user/upload', requestAuthorization, UserController.imageUpload);
     api.get('/cars', requestAuthorization, UserController.getCars);
+    api.get('/ratings', requestAuthorization, UserController.ratings);
 };

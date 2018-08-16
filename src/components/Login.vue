@@ -61,8 +61,9 @@ export default {
           this.$router.push('/');
         }
       } catch (error) {
+        
+        this.$toasted.error('There was an error while Logging In').goAway(5000);
         const errorMessage = error.message;
-        this.$toasted.error(errorMessage).goAway(5000);
       }
     }
   }

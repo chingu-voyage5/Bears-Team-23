@@ -6,7 +6,7 @@
       <div>
         <tabs>
           <tab name="Upcoming Trips">
-            <div v-if="pendingRides">
+            <div v-if="pendingRides.length">
               <div class="columns">
                 <div class="column is-one-thirds" v-for="ride in pendingRides" :key="ride.id">
                   <div class="box">
@@ -35,7 +35,7 @@
             </div>
           </tab>
           <tab name="Completed Trips">
-             <div v-if="completedRides">
+             <div v-if="completedRides.length">
               <div class="row">
                 <div class="col-md-4" v-for="ride in completedRides" :key="ride.id">
                   <div class="box">
