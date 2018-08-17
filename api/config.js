@@ -39,13 +39,9 @@ module.exports = (app, express) => {
     next();
   })
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: false
-  }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.use('/api', api);
-  app.use(history({
-    verbose: true
-  }));
+  app.use(history({ verbose: true }));
   app.use(serveStatic(__dirname + "./../dist"));
   app.use(logger('short'));
 
