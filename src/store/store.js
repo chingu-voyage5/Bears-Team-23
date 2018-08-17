@@ -38,6 +38,9 @@ const mutations = {
   set_image(state, image) {
     state.auth.image = image;
   },
+  set_car_image(state, image) {
+    state.auth.car.image = image;
+  },
   set_token(state, tokenData) {
     state.token = tokenData;
   },

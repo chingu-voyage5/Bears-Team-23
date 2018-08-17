@@ -92,8 +92,28 @@ class UserController {
                }
                user.image = result.url
                user.save().then(() => {
-                   responseService(200, 'success', res, 'Image Successfully uploaded', result.url);
+                   return responseService(200, 'success', res, 'Image Successfully uploaded', result.url);
                 })
+           })
+        })
+    }
+
+    carImageUpload(req, res){
+        functions.cloudinary.uploader.upload(req.body.img, result => {
+           Users.findById(req.user.id).then(user => {
+               if(!user){
+                return responseService(403, 'error', res, 'Unauthorized');
+               }
+               if(user.car){
+                user.car.image = result.url
+                user.save().then(() => {
+                    return responseService(200, 'success', res, 'Image Successfully uploaded', result.url);
+                 })
+               }
+               else return ;
+           })
+           .catch(err => {
+            return responseService(500, 'error', res, 'Error while uploading car image', err);
            })
         })
     }

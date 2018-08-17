@@ -28,7 +28,7 @@
               <p class="is-size-6">Adding your phone number means you'll be able to arrange your rides more easily.</p>
             </div>
             <div class="column is-one-quarters">
-              <button class="button is-myblue" style="margin-top: 15px;">Add my phone</button>
+              <router-link to="/profile/general" class="button is-myblue" style="margin-top: 15px;" >Add my phone</router-link>
             </div>
           </div>
         </div>

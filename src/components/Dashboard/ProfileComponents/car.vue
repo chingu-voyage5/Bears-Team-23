@@ -4,8 +4,6 @@
     <hr>
     <p class="pull-left" @click="back()">
     <i class="fa fa-arrow-left"/> Back</p>
-    <div v-if="!carDetailsAvailable">
-     
       <div>
         <div v-if="firstStep">
           <div class="columns is-centered">
@@ -20,19 +18,16 @@
                   <i class="fa fa-globe"/>
                 </span>
               </div> -->
-
                 <div class="field">
                   <div class="control">
                     <input v-model="car.license" type="text" class="input" placeholder="Number plate">
                   </div>
                 </div>
-
                 <div class="field">
                   <div class="control">
                     <button class="button is-myblue" @click="step+=1">Continue</button>
                   </div>
                 </div>
-
               </div>
             </div>
             <div class="column is-one-quarters" />
@@ -115,7 +110,6 @@
               </div>
             </div> -->
               <span v-if="carsRetrieved.length">
-                <p class="is-size-5 has-text-weight-bold">Car Models</p>
                 <hr>
                 <div class="car-brands">
                   <ul>
@@ -125,10 +119,17 @@
                           <i class="fa fa-chevron-right pull-right" />
                         </p>
                       </div>
-
                     </li>
                   </ul>
                 </div>
+              </span>
+
+              <span v-else>
+                 <div class="box">
+                   <p class="is-size-4">No results were returned from your search. Please put in valid information. and try again </p>
+                   <hr>
+                   <p class="is-size-6" @click="step-=1"><i class="fa fa-arrow-left"></i> Try Again</p>
+                 </div>
               </span>
             </div>
             <div class="column is-one-quarters" />
@@ -259,26 +260,31 @@
             <div class="column is-one-quarters" />
           </div>
         </div>
-      </div>
 
-
-    </div>
-    <div v-else>
+          <div v-if="sixthStep">
       <br>
       <br>
       <div class="box">
         <div class="columns">
-          <div class="column is-one-fifth has-text-centered">
+          <div class="column is-one-thirds has-text-centered">
             <div class="car">
-              <img :src="hatchback" class="image is-48x48" alt="">
+              <img v-if="!carImageAvailable && !upload_start" :src="hatchback" class="image is-48x48" alt="">
+              <img v-else :src="user.car.image" class="image is-128x128" alt="">
             </div>
            
             <br>
-            <a href="" class="  is-size-6 has-text-weight-bold">Upload photo</a>
-            <br>
+            <div v-if="upload_start">
+              <img :src="init_img" class="image is-128x128 is-centered" alt="">
+            </div>
+             <label v-if="!carImageAvailable && !upload_start" class="is-myblue" style="padding:20px;">
+                  <input type="file" accept="image/*" capture="camera" hidden @change="upload($event.target.files)">Change Picture
+                </label>
+
+                  <a v-if="upload_start" class="button is-default" @click="saveImage()">Upload</a>
+            <hr>
             <a class="button is-myblue" @click="changeDetails()">Change Car Details</a>
           </div>
-          <div class="column is-four-fifths">
+          <div class="column is-two-thirds">
             <div class="pull-left">
               <p class="is-size-4 has-text-weight-bold">{{ user.car.year }} {{ user.car.make }} {{ user.car.model }}</p>
               <p class="is-size-6 has-text-weight-bold">{{ user.car.license.toUpperCase() }}</p>
@@ -288,6 +294,8 @@
         </div>
       </div>
     </div>
+      </div>
+    
   </div>
 </template>
 
@@ -311,7 +319,10 @@ export default {
       hatchback,
       car: {},
       loading: false,
-      carsRetrieved: null
+      carsRetrieved: null,
+      init_img: null,
+      upload_start: false,
+      successful: false
     };
   },
   computed: {
@@ -339,11 +350,20 @@ export default {
     },
     carDetailsAvailable() {
       return this.user.car ? true : false;
+    },
+    carImageAvailable(){
+      return this.user.car.image ? true : false;
     }
+  },
+  created(){
+    if(this.carDetailsAvailable){
+      this.step = 6
+    } else this.step = 1
+    
   },
   methods: {
     back(){
-      if(this.step > 0){
+      if(this.step > 1){
         this.step-=1;
       }
     },
@@ -392,6 +412,7 @@ export default {
         .then(resp => {
           const { car } = resp.data.data;
           this.$store.commit('set_car', car);
+          this.step+=1;
           this.$toasted.success('Car details added successfully').goAway(3000);
         })
         .catch(err => {
@@ -402,7 +423,39 @@ export default {
     },
     changeDetails() {
       this.car = this.user.car;
-      this.carDetailsAvailable = false;
+      this.step = 1;
+    },
+     upload(element) {
+      this.processingImage = true
+      const photofile = element[0];
+      this.showPreview(photofile);
+    },
+    showPreview(file) {
+      // let loader = this.$loading.show();
+      this.upload_start = true;
+      try {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.init_img = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } catch (e) {
+        console.log('Error ', e);
+      }
+    },
+
+    saveImage() {
+      this.$axios
+        .post('/user/upload/car', { img: this.init_img })
+        .then(resp => {
+          const image = resp.data.data;
+          this.$store.commit('set_car_image', image);
+          this.successful = this.user.car.image ? true : false;
+          this.$toasted.success('Image Upload Successful').goAway(3000);
+        })
+        .catch(err => {
+          this.$toasted.error('Image upload failed').goAway(3000);
+        });
     }
   }
 };
@@ -419,6 +472,10 @@ export default {
 
 .columns.is-centered {
   margin: 50px 0;
+}
+
+.is-centered{
+  margin: 0 auto;
 }
 
 input[type='text'],
