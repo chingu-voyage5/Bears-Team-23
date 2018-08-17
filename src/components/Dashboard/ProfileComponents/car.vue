@@ -2,8 +2,8 @@
   <div>
     <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
     <hr>
-    <p class="pull-left">
-    <i class="fa fa-arrow-left" /> Back</p>
+    <p class="pull-left" @click="back()">
+    <i class="fa fa-arrow-left"/> Back</p>
     <div v-if="!carDetailsAvailable">
      
       <div>
@@ -342,6 +342,11 @@ export default {
     }
   },
   methods: {
+    back(){
+      if(this.step > 0){
+        this.step-=1;
+      }
+    },
     carFind() {
       this.loading = true;
       if (

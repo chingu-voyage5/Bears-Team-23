@@ -64,7 +64,8 @@ export default {
   },
   data() {
     return {
-      credentials: {}
+      credentials: {
+      }
     };
   },
   methods: {
