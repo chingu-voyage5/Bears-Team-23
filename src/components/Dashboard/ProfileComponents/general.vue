@@ -90,7 +90,7 @@
             </div>
             <div class="column is-one-quarters top">
               <figure class="image is-128x128">
-                <img v-if="user.image" class="is-rounded" :src="user.image">
+                <img v-if="user.image" :src="user.image">
                 <img v-else class="is-rounded" :src="userImage">
               </figure>
               <br>
