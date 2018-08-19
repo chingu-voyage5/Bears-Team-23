@@ -104,7 +104,7 @@ export default {
 
 <style scoped>
 .is-image {
-  background-image: url('../assets/img/hike.jpg');
+  background-image: url('http://res.cloudinary.com/pietrosparks/image/upload/q_auto:eco/v1534582700/hike.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 100px;

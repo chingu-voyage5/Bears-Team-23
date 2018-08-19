@@ -1,8 +1,8 @@
 <template>
   <div>
     <p class="is-size-4 has-text-weight-bold">Ratings Received</p>
-    <div>
-            
+    <hr>
+    <div> 
       <div class="box">
         <div class="columns">
         
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     ratingsAvailable() {
-      return !_.isNull(this.ratings);
+      return !_.isNull(this.ratings) && !_.isEmpty(this.ratings);
     },
     oneStar() {
       const oneStar = this.ratings.filter(r => r.rating == 1);

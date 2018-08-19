@@ -2,7 +2,7 @@
   <div>
     <p class="is-size-4 has-text-weight-bold">Your Car Details</p>
     <hr>
-    <p class="pull-left" @click="back()">
+    <p class="pull-left" v-if="step!==6" @click="back()">
     <i class="fa fa-arrow-left"/> Back</p>
       <div>
         <div v-if="firstStep">
@@ -452,6 +452,7 @@ export default {
           this.$store.commit('set_car_image', image);
           this.successful = this.user.car.image ? true : false;
           this.$toasted.success('Image Upload Successful').goAway(3000);
+          this.step = 6;
         })
         .catch(err => {
           this.$toasted.error('Image upload failed').goAway(3000);

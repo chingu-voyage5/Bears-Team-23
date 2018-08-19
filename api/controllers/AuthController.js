@@ -16,11 +16,32 @@ class AuthController {
                     return responseService(409, 'error', res, 'Mail Exists', null);
                 } else {
                     req.body.password = functions.hasher(req.body.password);
+                    req.body.verify_token = { token: functions.randomID(8).toUpperCase(), isUsed: false};
+
+                   
                     const new_user = new Users(req.body);
                     new_user.save()
-                        .then(user => {
-                            delete req.body.password;
-                            return responseService(200, 'error', res, `Successfully Signed Up ${user.role}`, req.body);
+                        .then( async user => {
+                         
+                            const msg = {
+                                to: 'pietrosparks@gmail.com',
+                                from: 'info@waka-ng.com',
+                                subject: 'Welcome to Waka-ng',
+                                text: 'Welcome to Waka-ng',
+                                html:`<strong>Welcome to Waka-ng. Connecting People and making it easier to get from point A to B</strong> 
+                                        <br> Please click the link to verify your account http://localhost:8080/verify/${req.body.verify_token.token}`
+                            }
+                            
+                            try{
+                                const mail = await functions.mailer(msg);
+                                delete req.body.password;
+                                delete req.body.verify_token;
+                                return responseService(200, 'error', res, `Successfully Signed Up ${user.role}`, req.body);
+                            }
+                            catch(e){
+                                console.log(e, 'error sending mail');
+                            }
+                            
                         })
                 }
             })
@@ -68,6 +89,33 @@ class AuthController {
                 })
             }
             else return responseService(403, 'error', res, 'Password Incorrect')
+        })
+    }
+
+    verifyUser(req, res){
+        Users.findOne({'verify_token.token': req.params.id }, {password: 0}).then(user => {
+            if(!user){
+                return responseService(404,'error', res, 'Error finding User with token');
+            }
+
+            if(user && user.verify_token.isUsed === true){
+                return responseService(404,'error', res, 'Token has been used');
+            }
+
+            user.verifications.push({
+               name: 'email',
+                source: user.email,
+                status: true
+            })
+
+            user.verify_token.isUsed = true ;
+            
+            user.save().then(() => {
+                return responseService(200, 'success', res, 'Successfully Verified Email', user);
+            })
+            .catch(err => {
+                return responseService(500, 'error', res, 'Error occured while verifying user', err)
+            })
         })
     }
 

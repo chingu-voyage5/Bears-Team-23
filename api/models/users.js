@@ -34,6 +34,9 @@ const userSchema = new Schema({
     driver_license: {
         type: String
     },
+    verify_token:{
+        type: Schema.Types.Mixed
+    },
     rating: {
         type: String
     },

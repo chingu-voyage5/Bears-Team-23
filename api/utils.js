@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt-nodejs');
 const _ = require('lodash');
 const salt = bcrypt.genSaltSync(10);
 const cloudinary = require('cloudinary');
+const sgMail = require('@sendgrid/mail');
+const text = require('textbelt');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 cloudinary.config({
   cloud_name: secrets.CLOUD_NAME,
@@ -12,6 +16,32 @@ cloudinary.config({
   api_secret: secrets.CLOUD_SECRET
 });
 
+const texter = (options) => {
+
+  const { phone, message } = options;
+
+  const opts = {
+    fromAddr: 'some@email.com',  // "from" address in received text
+    fromName: 'joe smith',       // "from" name in received text
+    region:   'intl',              // region the receiving number is in: 'us', 'canada', 'intl'
+    subject:  'something'        // subject of the message
+  }
+
+  return text.sendText(phone, message, opts);
+}
+
+const mailer = (msg) => {
+  
+/** const msg = {
+  to: 'test@example.com',
+  from: 'test@example.com',
+  subject: 'Sending with SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+}; **/
+
+  return sgMail.send(msg);
+};
 
 const encryptPayload = (payload) => {
   return JWT.sign({
@@ -65,11 +95,13 @@ const json = (status, statusText, res, message, data, meta) => {
 }
 
 module.exports = {
-  randomID: randomID,
+  randomID,
   hasher: passwordHash,
   decrypter: passwordDecrypt,
   encryptPayload: encryptPayload,
   requestAuthorization: requestAuthorization,
   response: json,
-  cloudinary
-}
+  cloudinary,
+  mailer,
+  texter
+};

@@ -5,6 +5,7 @@ import CreateTrip from '@/components/CreateTrip';
 import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
+import Verify from '@/components/Verify';
 import SearchResult from '@/components/SearchedTrips';
 import SearchSelected from '@/components/SearchSelected';
 import Dashboard from '@/components/Dashboard/index';
@@ -59,6 +60,11 @@ export default new Router({
       name: 'Login',
       component: Login,
       beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: '/verify/:id',
+      name: 'Verify',
+      component: Verify
     },
     {
       path: '/route/create',

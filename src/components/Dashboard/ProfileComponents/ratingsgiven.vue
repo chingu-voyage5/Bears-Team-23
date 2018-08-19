@@ -1,6 +1,7 @@
 <template>
   <div>
     <p class="is-size-4 has-text-weight-bold">Ratings Given</p>
+    <hr>
     <div class="box">
       <div>
         
@@ -38,7 +39,7 @@ export default {
       return this.ratings.length;
     },
     ratingsAvailable() {
-      return !_.isNull(this.ratings);
+      return !_.isNull(this.ratings) && !_.isEmpty(this.ratings);
     }
   },
   created() {
