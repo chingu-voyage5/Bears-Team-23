@@ -1,6 +1,7 @@
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
+const myEnv = require('dotenv').config();
 const config = require('../config')
 const merge = require('webpack-merge')
 const path = require('path')
@@ -46,7 +47,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../config/dev.env')
+      'process.env': require('../config/dev.env'),
+      GOOGLE_MAP: JSON.stringify(myEnv.parsed.GOOGLE_MAP)
     }),
     new webpack.ProvidePlugin({
       mapboxgl: 'mapbox-gl'

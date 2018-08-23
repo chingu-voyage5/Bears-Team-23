@@ -4,6 +4,7 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const myEnv = require('dotenv').config();
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -30,7 +31,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': env,
+      GOOGLE_MAP: JSON.stringify(myEnv.parsed.GOOGLE_MAP)
     }),
     new webpack.ProvidePlugin({
       mapboxgl: 'mapbox-gl'
